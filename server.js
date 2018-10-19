@@ -7,18 +7,30 @@ const request 		 = require('superagent');
 
 require('./db/db');
 
-const key = 'AIzaSyAb4dWry_xBx7-bUMmouS848cEOxa2LPxw';
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
 
+
+// const center = user location
+// use nearby search w/ keyword 'brewery' and center as the location argument, with radius of however many miles
+
+
+const apiKey = 'AIzaSyAb4dWry_xBx7-bUMmouS848cEOxa2LPxw';
+
 app.get('/', (req, res) => {
-	request.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=' + key).end((err, response) => {
+	request.get('https://maps.googleapis.com/maps/api/place/textsearch/json?input=chicago%20breweries&inputtype=textquery&fields=name&key='+ apiKey).end((err, response) => {
 		
 		const placesData = JSON.parse(response.text);
+
+		for(let i = 0; i < placesData.results.length; i++) {
+			console.log(placesData.results[i].name);
+		}
+		res.send('getting brewery data');
+		
 	});
 
-	console.log(placesData);
+
 })
 
 
