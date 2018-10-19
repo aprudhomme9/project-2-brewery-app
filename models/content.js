@@ -1,0 +1,3 @@
+
+Styles:
+['Bock', 'Doppelbock', 'Eisbock', 'Maibock', 'Weizenbock', 'American Brown Ale', 'English Brown Ale', 'Dark Mild Ale', 'Altbier', 'Black Ale', 'Belgian Dark Ale', 'Belgian Dubbel', 'Roggenbier', 'Scottish Ale', 'Winter Warmer', 'American Amber/Red Lager', 'Dark Lager', 'Oktoberfest', 'Rauchbier', 'Schwarzbier', 'Munich Dunkel Lager', 'Vienna Lager', 'Cream Ale', 'Biere de Champagne', 'California Common/Steam Beer', 'American Brut IPA', 'Imperial IPA', 'IPA', ]
