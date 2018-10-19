@@ -1,4 +1,4 @@
-Project 2:
+### Project 2: Brewery App
 
 
 ## This app is designed to provide the user with a list of breweries in their area (X Mile Radius), or users can search breweries/beer. Users will login, or register. The user can then check into a brewery as having visited, as well as add beers from that brewery into a list of beers they have tried. 
