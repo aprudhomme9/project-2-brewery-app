@@ -50,48 +50,48 @@
 
 // Brewery:
 
-const brewerySchema = new mongoose.Schema({
-	name: {
-		type: String,
-		required: true
-	},
-	location: String, //Google Places API
-	map: <--- API?
-	visited: Boolean,
-	dogfriendly: Boolean,
-	bikefriendly: Boolean,
-	atmosphere: String,
-	price: String, //Google Places API
-	website: String, //Google Places API
-	reviews: [String], //Public
-	notes: [String] //For user
-});
+// const brewerySchema = new mongoose.Schema({
+// 	name: {
+// 		type: String,
+// 		required: true
+// 	},
+// 	location: String, //Google Places API
+// 	map: <--- API?
+// 	visited: Boolean,
+// 	dogfriendly: Boolean,
+// 	bikefriendly: Boolean,
+// 	atmosphere: String,
+// 	price: String, //Google Places API
+// 	website: String, //Google Places API
+// 	reviews: [String], //Public
+// 	notes: [String] //For user
+// });
 
-// Beer: 
-const beerSchema = new mongoose.Schema({
-	name: {
-		type: String,
-		required: true
-	},
-	brewery: [Brewery.Schema],
-	kind: String, //Dropdown to keep beers organized
-	picture: [String], //Allow user to upload pictures? Warn user these will be public?
-	rating: Number, //limit this via dropdown option?
-	hops: [String], //Is there something we can do here where when they start typing it tries to autofill people to ensure we keep our Strings the same?
-	yeast: [String],
-	barrel: String, 
-	additives: [String], //berries, spices, etc.
-	reviews: [String], //public
-	notes: String //for user
-});
+// // Beer: 
+// const beerSchema = new mongoose.Schema({
+// 	name: {
+// 		type: String,
+// 		required: true
+// 	},
+// 	brewery: [Brewery.Schema],
+// 	kind: String, //Dropdown to keep beers organized
+// 	picture: [String], //Allow user to upload pictures? Warn user these will be public?
+// 	rating: Number, //limit this via dropdown option?
+// 	hops: [String], //Is there something we can do here where when they start typing it tries to autofill people to ensure we keep our Strings the same?
+// 	yeast: [String],
+// 	barrel: String, 
+// 	additives: [String], //berries, spices, etc.
+// 	reviews: [String], //public
+// 	notes: String //for user
+// });
 
-// User:
-const userSchema = new mongoose.Schema({
-	username: String, 
-	password: String,
-	breweries: [String], //populate from api
-	beers: [String]
-});
+// // User:
+// const userSchema = new mongoose.Schema({
+// 	username: String, 
+// 	password: String,
+// 	breweries: [String], //populate from api
+// 	beers: [String]
+// });
 
 
 //Something to remember is that when a user selects a beer, the user gets the beer pushed into an array, and the beer itself gets a brewery. A dropdown for breweries on the new beer page is probably not the best design choice, but we could use it if we made the drop down populate with with breweries within a 25 mile radius using the API, or forced the user to only enter a beer through a brewery/only enter a beer already logged to a brewery. 
