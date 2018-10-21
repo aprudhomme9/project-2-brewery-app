@@ -3,8 +3,9 @@ const app            = express();
 const bodyParser     = require('body-parser');
 const methodOverride = require('method-override');
 const session        = require('express-session');
-const request 		 = require('superagent');
-
+const request 	 = require('superagent');
+const cheerio 		 = require('cheerio');
+const brewerySearch  = require('./models/brewerySearch');
 require('./db/db');
 
 
@@ -19,33 +20,40 @@ app.use(methodOverride('_method'));
 const apiKey = 'AIzaSyAb4dWry_xBx7-bUMmouS848cEOxa2LPxw';
 
 app.get('/', (req, res) => {
-	request.get('https://maps.googleapis.com/maps/api/place/textsearch/json?input=minneapolis%20breweries&inputtype=textquery&fields=name&key='+ apiKey).end((err, response) => {
-		
-		const placesData = JSON.parse(response.text);
-
-		const breweriesArray = placesData.results;
-
-		const breweryNames = [];
-
-		const breweryAddresses = [];
-
-		for(let i = 0; i < breweriesArray.length; i++) {
-			breweryNames.push(breweriesArray[i].name);
-		}
-
-		for(let i = 0; i < breweriesArray.length; i++) {
-			breweryAddresses.push(breweriesArray[i].formatted_address)
-		}
-
-		res.render('./brewery/index.ejs', {
-			breweries: breweryNames,
-			addresses: breweryAddresses
-		})
-		
-	});
-
-
+brewerySearch.brewerySearch("Anchor", (places) => {
+	console.log(places);
 })
+
+
+
+});
+
+	// request.get('https://maps.googleapis.com/maps/api/place/textsearch/json?input=minneapolis%20breweries&inputtype=textquery&fields=name&key='+ apiKey).end((err, response) => {
+		
+	// 	const placesData = JSON.parse(response.text);
+
+	// 	const breweriesArray = placesData.results;
+
+	// 	const breweryNames = [];
+
+	// 	const breweryAddresses = [];
+
+	// 	for(let i = 0; i < breweriesArray.length; i++) {
+	// 		breweryNames.push(breweriesArray[i].name);
+	// 	}
+
+	// 	for(let i = 0; i < breweriesArray.length; i++) {
+	// 		breweryAddresses.push(breweriesArray[i].formatted_address)
+	// 	}
+
+	// 	res.render('./brewery/index.ejs', {
+	// 		breweries: breweryNames,
+	// 		addresses: breweryAddresses
+	// 	})
+		
+	// });
+
+
 
 
 
