@@ -1,5 +1,5 @@
-const express = require('express');
-const Beer = require('./beer')
+const mongoose = require('mongoose');
+const Brewery = require('./brewery');
 
 const beerSchema = new mongoose.Schema({
 	name: {
@@ -7,7 +7,7 @@ const beerSchema = new mongoose.Schema({
 		required: true
 	},
 	brewery: Brewery.Schema,
-	reviews: [Review.Schema],
+	reviews: String, //[Review.Schema],
 	kind: String, //Dropdown to keep beers organized
 	abv: String, // Dropdown percentage
 	ibu: String, //Dropdown
