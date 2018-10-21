@@ -19,14 +19,28 @@ app.use(methodOverride('_method'));
 const apiKey = 'AIzaSyAb4dWry_xBx7-bUMmouS848cEOxa2LPxw';
 
 app.get('/', (req, res) => {
-	request.get('https://maps.googleapis.com/maps/api/place/textsearch/json?input=chicago%20breweries&inputtype=textquery&fields=name&key='+ apiKey).end((err, response) => {
+	request.get('https://maps.googleapis.com/maps/api/place/textsearch/json?input=minneapolis%20breweries&inputtype=textquery&fields=name&key='+ apiKey).end((err, response) => {
 		
 		const placesData = JSON.parse(response.text);
 
-		for(let i = 0; i < placesData.results.length; i++) {
-			console.log(placesData.results[i].name);
+		const breweriesArray = placesData.results;
+
+		const breweryNames = [];
+
+		const breweryAddresses = [];
+
+		for(let i = 0; i < breweriesArray.length; i++) {
+			breweryNames.push(breweriesArray[i].name);
 		}
-		res.send('getting brewery data');
+
+		for(let i = 0; i < breweriesArray.length; i++) {
+			breweryAddresses.push(breweriesArray[i].formatted_address)
+		}
+
+		res.render('./brewery/index.ejs', {
+			breweries: breweryNames,
+			addresses: breweryAddresses
+		})
 		
 	});
 

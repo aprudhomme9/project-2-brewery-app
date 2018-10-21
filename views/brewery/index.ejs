@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Brewery Index Page</title>
+</head>
+<body>
+	<ul>
+		<%breweries.forEach((brewery, i) => {%>
+ 			<li><%=brewery%>: </li>
+ 				<p><%=addresses[i]%></p>
+ 		<%})%>
+	</ul>
+
+</body>
+</html>
