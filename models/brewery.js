@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Brewery = require('./brewery')
 
 const brewerySchema = new mongoose.Schema({
 	name: {
