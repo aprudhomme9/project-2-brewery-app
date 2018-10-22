@@ -6,7 +6,7 @@ const beerSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	brewery: Brewery.Schema,
+	brewery: Brewery.schema,
 	reviews: String, //[Review.Schema],
 	kind: String, //Dropdown to keep beers organized
 	abv: String, // Dropdown percentage

@@ -790,12 +790,12 @@ const beer = [
 	ibu: '18 IBU'
 }];
 
-const rootContent = {
+const content = {
 	fermentation: fermentation,
 	brewery: brewery,
 	beer: beer,
 	origin: origin,
 	srm: standardReferenceMethod
 }
-module.exports = rootContent;
+module.exports = content;
 

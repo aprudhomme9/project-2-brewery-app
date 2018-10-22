@@ -7,22 +7,33 @@ const request 		 = require('superagent');
 
 require('./db/db');
 
+
+const Beer = require('./models/beer');
+const Brewery = require('./models/brewery');
+const content = require('./models/content');
 const breweryController = require('./controllers/breweryController');
-// const beerController = require('./controllers/beerController');
+const beerController = require('./controllers/beerController');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
 
 
+
+
+
 app.use('/breweries', breweryController);
-// app.use('/beers', beerController);
+app.use('/beers', beerController);
 
 
 
+app.get('/', (req, res) => {
+    res.render('index.ejs');
+})
 
-
-
-
+app.get('/seed', async (req, res) => {
+    const createdBeer = await Beer.create(content.beer);
+    res.send(createdBeer);
+})
 
 
 

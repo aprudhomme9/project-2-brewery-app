@@ -3,7 +3,7 @@ const router = express.Router();
 const request = require('superagent');
 const Content = require('../models/content');
 
-const apiKey = 'AIzaSyAb4dWry_xBx7-bUMmouS848cEOxa2LPxw';
+const placesKey = 'AIzaSyAb4dWry_xBx7-bUMmouS848cEOxa2LPxw';
 
 const mapsKey = 'AIzaSyBzijVyQTE_Odm2-IXZsA3MbzSjk81zQgk';
 
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 		const userLat = locationData.location.lat;
 		const userLng = locationData.location.lng;
 
-		 request.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLat + ',' + userLng + '&radius=40233.6&keyword=brewery&key=' + apiKey).end(async (err, response) => {
+		 request.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLat + ',' + userLng + '&radius=50000&keyword=brewery&key=' + placesKey).end(async (err, response) => {
 	
 				const placesData = JSON.parse(response.text);
 
@@ -26,8 +26,8 @@ router.get('/', (req, res) => {
 					const newObj = {
 						name: brewery.name,
 						price: brewery.price_level,
-						location: brewery.vicinity,
-						rating: brewery.rating
+						rating: brewery.rating,
+						placeid: brewery.place_id
 					}
 					return newObj;
 				})
@@ -36,6 +36,32 @@ router.get('/', (req, res) => {
 					res.render('./brewery/index.ejs', {
 					breweries: createdBreweries
 
+				})
+			}) 
+		})
+	})
+})
+
+router.get('/:id', async (req, res) => {
+	Brewery.findById(req.params.id, async (err, foundBrewery) => {
+		request.get('https://maps.googleapis.com/maps/api/place/details/json?placeid=' + foundBrewery.placeid + '&key=' + mapsKey).end(async (err, response) => {
+
+			const breweryDetails = JSON.parse(response.text);
+
+			const thisBrewery = breweryDetails.result
+
+			await Brewery.findByIdAndUpdate(req.params.id, {
+				location: thisBrewery.formatted_address,
+				website: thisBrewery.website,
+				phone: thisBrewery.formatted_phone_number,
+				map: thisBrewery.url
+			}, (err, updatedBrewery) => {
+				res.render('./brewery/show.ejs', {
+					brewery: updatedBrewery,
+					address: thisBrewery.formatted_address,
+					website: thisBrewery.website,
+					phone: thisBrewery.formatted_phone_number,
+					url: thisBrewery.url
 				})
 			})
 		})

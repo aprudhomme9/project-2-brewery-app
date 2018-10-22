@@ -4,15 +4,12 @@
 	<title>Brewery Index Page</title>
 </head>
 <body>
+	<h1>Breweries Near You</h1>
 	<ul>
 		<%breweries.forEach((brewery, i) => {%>
- 			<li><%=brewery.name%>: </li>
+ 			<li><a href="/breweries/<%=brewery.id%>"><%=brewery.name%></a>: </li>
  				<br>
- 				<p><%=brewery.location%></p>
- 				<br>
- 				<p>Price Level: <%=brewery.price%></p>
- 				<br>
- 				<p>Rating: <%=brewery.rating%></p>
+ 				<p>Rating: <%=brewery.rating%>/5 stars</p>
  				<br>
  		<%})%>
 	</ul>
