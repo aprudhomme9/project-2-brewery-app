@@ -6,13 +6,13 @@
 <body>
 	<ul>
 		<%breweries.forEach((brewery, i) => {%>
- 			<li><%=breweries.name%>: </li>
+ 			<li><%=brewery.name%>: </li>
  				<br>
- 				<p><%=breweries.location%></p>
+ 				<p><%=brewery.location%></p>
  				<br>
- 				<p>Price Level: <%=breweries.price%></p>
+ 				<p>Price Level: <%=brewery.price%></p>
  				<br>
- 				<p>Rating: <%=breweries.rating%></p>
+ 				<p>Rating: <%=brewery.rating%></p>
  				<br>
  		<%})%>
 	</ul>
