@@ -29,22 +29,29 @@ app.get('/breweries', (req, res) => {
 
 		const breweryAddresses = [];
 
-		for(let i = 0; i < breweries.length; i++) {
-			breweryNames.push(breweries[i].name);
-		}
+		const breweryPrices = [];
+
+		const breweryRatings = [];
+
+		const breweryOpen = [];
 
 		for(let i = 0; i < breweries.length; i++) {
-			breweryAddresses.push(breweries[i].formatted_address)
+			breweryNames.push(breweries[i].name);
+			breweryAddresses.push(breweries[i].formatted_address);
+			breweryPrices.push(breweries[i].price_level);
+			breweryRatings.push(breweries[i].rating);
+			// breweryOpen.push(breweries[i].opening_hours.open_now);
 		}
+		console.log(breweries);
 
 		res.render('./brewery/index.ejs', {
 			breweries: breweryNames,
-			addresses: breweryAddresses
-		})
-		
-	});
-
-
+			addresses: breweryAddresses,
+			price: breweryPrices,
+			rating: breweryRatings
+			// open: breweryOpen
+		})	
+	})
 })
 
 
