@@ -5,15 +5,25 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
+	<div class="row">
+          <div class="col-md-2"><a href="./breweries/">Breweries</a></div>
+          <div class="col-md-2"><a href="/beer">Beers</a></div>
+          <div class="col-md-2"><a href="">Profile</a></div>
+     </div>
 	<div class="container">
 		<h1>Breweries Near You</h1>
 			<ul>
+				<div class="row">
 				<%breweries.forEach((brewery, i) => {%>
- 					<li><a href="/breweries/<%=brewery.id%>"><%=brewery.name%></a>: </li>
- 					<br>
- 					<p>Rating: <%=brewery.rating%>/5 stars</p>
- 					<br>
+					<div class='col-md-4'>
+						<a href="/breweries/<%=brewery.id%>"><%=brewery.name%></a>
+ 						<br>
+
+ 						<p><%=brewery.rating%>/5 stars</p>
+ 						<br>
+					</div>
  				<%})%>
+ 				</div>
 			</ul>
 	</div>
 	
