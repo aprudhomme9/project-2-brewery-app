@@ -8,8 +8,6 @@ const brewerySchema = new mongoose.Schema({
 	location: String, //Google Places API
 	map: //<--- API?
 	visited: Boolean,
-	dogfriendly: Boolean,
-	bikefriendly: Boolean,
 	atmosphere: String,
 	price: String, //Google Places API
 	website: String, //Google Places API
