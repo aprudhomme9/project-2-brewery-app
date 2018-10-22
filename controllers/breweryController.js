@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const request = require('superagent');
+const Content = require('../models/content');
 
 // const center = user location
 // use nearby search w/ keyword 'brewery' and center as the location argument, with radius of however many miles
