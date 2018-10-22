@@ -6,6 +6,7 @@ const session        = require('express-session');
 const request 	 = require('superagent');
 const cheerio 		 = require('cheerio');
 const brewerySearch  = require('./models/brewerySearch');
+const beerSearch = require('./models/beerSearch');
 require('./db/db');
 
 
@@ -20,8 +21,8 @@ app.use(methodOverride('_method'));
 const apiKey = 'AIzaSyAb4dWry_xBx7-bUMmouS848cEOxa2LPxw';
 
 app.get('/', (req, res) => {
-brewerySearch.brewerySearch("Anchor", (places) => {
-	console.log(places);
+beerSearch.beerSearch("sherbert", (beer) => {
+	console.log(beer);
 })
 
 

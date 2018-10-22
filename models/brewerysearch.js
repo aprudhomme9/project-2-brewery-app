@@ -47,5 +47,24 @@ module.exports.brewerySearch = (query, callback) => {
 
     });
 };
+// let breweryArrayGoogle = [];
+// const apiKey = 'AIzaSyAb4dWry_xBx7-bUMmouS848cEOxa2LPxw';
+// const googleBrewery = (query, callback) => {
+//     request.get('https://maps.googleapis.com/maps/api/place/textsearch/json?input='+ encodeURIComponent(query) +'&inputtype=textquery&fields=name&key=' + apiKey).end((err, response) =>{
+//          const placesData = JSON.parse(response.text);
+//          breweryArrayGoogle = placesData.results;
+//          console.log(breweryArrayGoogle, 'brewery ala google');
+//          console.log(breweryArrayGoogle[0].name);
+//          console.log(breweryArrayGoogle[0].formatted_address);
+//          res.render('./brewery/index.ejs', {
+//             brewery: Brewery
+//          });
+
+//     });
+ 
+// }
+
+
+
 
 // module.exports = brewerySearch;
