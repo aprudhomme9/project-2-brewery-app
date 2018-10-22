@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login and Register</title>
+</head>
+<body>
+	<h1>Register</h1><small><%=message%></small>
+		<form action="/auth/register" method="POST">
+			<input type="text" name="username"><br/>
+			<input type="text" name="password"><br/>
+			<button type="submit">Register</button>
+		</form>
+
+	<h1>Login</h1><small><%=message%></small>
+		<form action="/auth/login" method="POST">
+			<input type="text" name="username"><br/>
+			<input type="text" name="password"><br/>
+			<button type="submit">Login</button>
+		</form>
+</body>
+</html>

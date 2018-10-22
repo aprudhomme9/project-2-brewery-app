@@ -13,12 +13,15 @@
 		<div class="col-md-2"><a href="">Profile</a></div>
 		<!--if user is logged in, -->
 		<%if(){%>
-		<div class="col-md-4">
+			<div class="col-md-2"><button type="submit">Logout</button></div>
 		<%} else {%>
 		<!--Needs fields for login-->
-		<div class="col-md-3"><a href="">Login</a></div>
-		<div class="col-md-3"><a href="">Password</a></div>
-		<div class="col-md-1"><a href="">Register</a></div>
+		<div class="col-md-3"><a href="">Login</a>
+			<input type="text" name="username"></div>
+		<div class="col-md-3"><a href="">Password</a>
+			<input type="text" name="password"></div>
+		<div class="col-md-1"><button type="submit">Login</button></div>
+		<div class="col-md-1"><button type="submit">Register</button></div>
 		<%}%>
 		<%brewery.forEach((brewery, i) => {%>
  			<div class="row">
