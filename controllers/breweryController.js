@@ -2,10 +2,6 @@ const express = require('express');
 const router = express.Router();
 const request = require('superagent');
 
-// const center = user location
-// use nearby search w/ keyword 'brewery' and center as the location argument, with radius of however many miles
-
-
 const apiKey = 'AIzaSyAb4dWry_xBx7-bUMmouS848cEOxa2LPxw';
 
 const mapsKey = 'AIzaSyBzijVyQTE_Odm2-IXZsA3MbzSjk81zQgk';
