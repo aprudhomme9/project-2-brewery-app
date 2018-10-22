@@ -57,4 +57,22 @@ router.get('/', (req, res) => {
 	})
 })
 
+//Login INDEX POST
+router.post('/', async (req, res, next) => {
+		try {
+			const foundUser = await User.findOne({username: req.body.username});
+			if(foundUser && bcrypt.compareSync(req.body.password, foundUser.password)){
+			res.send('/')
+		} else {
+			// req.session.message = "Username or Password is incorrect"
+			//res.send('/');
+		}
+		}	catch(e){	
+			res.send('/')
+			res.send(e, "error");
+			next(e)
+		}
+		
+});
+
 module.exports = router;
