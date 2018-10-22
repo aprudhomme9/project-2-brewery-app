@@ -13,6 +13,7 @@ const brewerySchema = new mongoose.Schema({
 	atmosphere: String,
 	price: String, //Google Places API
 	website: String, //Google Places API
+	rating: Number,
 	reviews: [String], //Public
 	notes: [String] //For user
 });

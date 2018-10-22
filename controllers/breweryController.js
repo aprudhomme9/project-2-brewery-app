@@ -7,7 +7,9 @@ const apiKey = 'AIzaSyAb4dWry_xBx7-bUMmouS848cEOxa2LPxw';
 
 const mapsKey = 'AIzaSyBzijVyQTE_Odm2-IXZsA3MbzSjk81zQgk';
 
-router.get('/', (req, res) => {
+const Brewery = require('./models/brewery');
+
+router.get('/', async (req, res) => {
 	request.post('https://www.googleapis.com/geolocation/v1/geolocate?key=' + mapsKey).end((err, response) => {
 		const locationData = JSON.parse(response.text);
 		console.log(locationData);
@@ -31,23 +33,20 @@ router.get('/', (req, res) => {
 			const breweryOpen = [];
 
 			for(let i = 0; i < breweries.length; i++) {
-				breweryNames.push(breweries[i].name);
-				breweryAddresses.push(breweries[i].vicinity);
-				breweryPrices.push(breweries[i].price_level);
-				breweryRatings.push(breweries[i].rating);
-				breweryOpen.push(breweries[i].opening_hours.open_now);
+				const createdBrewery = await Brewery.create({name: breweries[i].name}, {price: breweries[i].price_level}, {rating: breweries[i].rating}, {location: breweries[i].vicinity});
+				
+				createdBrewery.save();
+				// breweryNames.push(breweries[i].name);
+				// breweryAddresses.push(breweries[i].vicinity);
+				// breweryPrices.push(breweries[i].price_level);
+				// breweryRatings.push(breweries[i].rating);
+				// breweryOpen.push(breweries[i].opening_hours.open_now);
 			}
-		// console.log(breweries);
 
 			res.render('./brewery/index.ejs', {
-				breweries: breweryNames,
-				addresses: breweryAddresses,
-				price: breweryPrices,
-				rating: breweryRatings,
-				open: breweryOpen
+				breweries: Brewery
 			})	
 		})
-	
 	})
 })
 
