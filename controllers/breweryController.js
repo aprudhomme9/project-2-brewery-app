@@ -17,41 +17,39 @@ router.get('/', (req, res) => {
 		const userLat = locationData.location.lat;
 		const userLng = locationData.location.lng;
 
-		 request.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLat + ',' + userLng + '&radius=1500&keyword=breweries&key=' + apiKey).end((err, response) => {
+		 request.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLat + ',' + userLng + '&radius=40233.6&keyword=brewery&key=' + apiKey).end((err, response) => {
 		
-		const placesData = JSON.parse(response.text);
+			const placesData = JSON.parse(response.text);
 
-		const breweries = placesData.results;
+			const breweries = placesData.results;
 
-		const breweryNames = [];
+			const breweryNames = [];
 
-		const breweryAddresses = [];
+			const breweryAddresses = [];
 
-		const breweryPrices = [];
+			const breweryPrices = [];
 
-		const breweryRatings = [];
+			const breweryRatings = [];
 
-		const breweryOpen = [];
+			const breweryOpen = [];
 
-		for(let i = 0; i < breweries.length; i++) {
-			breweryNames.push(breweries[i].name);
-			breweryAddresses.push(breweries[i].formatted_address);
-			breweryPrices.push(breweries[i].price_level);
-			breweryRatings.push(breweries[i].rating);
-			// breweryOpen.push(breweries[i].opening_hours.open_now);
-		}
+			for(let i = 0; i < breweries.length; i++) {
+				breweryNames.push(breweries[i].name);
+				breweryAddresses.push(breweries[i].vicinity);
+				breweryPrices.push(breweries[i].price_level);
+				breweryRatings.push(breweries[i].rating);
+				breweryOpen.push(breweries[i].opening_hours.open_now);
+			}
 		// console.log(breweries);
 
-		console.log(placesData);
-
-		res.render('./brewery/index.ejs', {
-			breweries: breweryNames,
-			addresses: breweryAddresses,
-			price: breweryPrices,
-			rating: breweryRatings
-			// open: breweryOpen
-		})	
-	})
+			res.render('./brewery/index.ejs', {
+				breweries: breweryNames,
+				addresses: breweryAddresses,
+				price: breweryPrices,
+				rating: breweryRatings,
+				open: breweryOpen
+			})	
+		})
 	
 	})
 })
