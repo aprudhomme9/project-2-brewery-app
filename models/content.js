@@ -16,7 +16,7 @@ id: 4,
 color: '4 Pale Gold',
 img: ''
 },{
-id: 5
+id: 5,
 color: '5 Gold',
 img: ''
 },{
@@ -73,7 +73,7 @@ color: '30 Deep Brown',
 img: ''
 }, {
 id: 19,
-color: '31-40 Black'
+color: '31-40 Black',
 img: []
 }];
 
@@ -349,7 +349,7 @@ const beer = [
 	brewery: brewery[0],
 	style: 'New England IPA',
 	abv: '6%',
-	ibu: '30 IBU'
+	ibu: '30 IBU',
 	hops: 'Mosaic, Citra',
 	additives: 'Lactose'
 
@@ -404,7 +404,7 @@ const beer = [
 }, {
 	name: 'Three Orange Wit',
 	brewery: brewery[2],
-	style: 'Strong White Ale'
+	style: 'Strong White Ale',
 	abv: '7.2%',
 	ibu: '20 IBU',
 	additives: 'Corianda, Chamomile, Orange'
