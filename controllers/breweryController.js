@@ -42,15 +42,15 @@ router.get('/', (req, res) => {
 	})
 })
 
-router.get('/:id', async (req, res) => {
-	Brewery.findById(req.params.id, async (err, foundBrewery) => {
+router.get('/:id', (req, res) => {
+	Brewery.findById(req.params.id, (err, foundBrewery) => {
 		request.get('https://maps.googleapis.com/maps/api/place/details/json?placeid=' + foundBrewery.placeid + '&key=' + mapsKey).end(async (err, response) => {
 
 			const breweryDetails = JSON.parse(response.text);
 
 			const thisBrewery = breweryDetails.result
 
-			await Brewery.findByIdAndUpdate(req.params.id, {
+			Brewery.findByIdAndUpdate(req.params.id, {
 				location: thisBrewery.formatted_address,
 				website: thisBrewery.website,
 				phone: thisBrewery.formatted_phone_number,
