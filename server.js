@@ -22,7 +22,7 @@ app.use(methodOverride('_method'));
 
 
 app.use('/breweries', breweryController);
-app.use('/beers', beerController);
+app.use('/beer', beerController);
 
 
 

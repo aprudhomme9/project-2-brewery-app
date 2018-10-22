@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+      <title>Individual Beer</title>
+   </head>
+   <body>
+      <div class="container">
+      <!-- title -->
+      <div class="row">
+         <h1><%=beer.name%></h1>
+      </div>
+      <!-- temp info for beer -->
+      <div class="row">
+         <div class="col-md-4">
+            <h2> Brewery: <%=beer.brewery.name%></h2>
+         </div>
+         <div class="col-md-8">
+            <h3> Location: <%=beer.brewery.location%></h3>
+         </div>
+     </div>
+         <!--  review add your beer section, nothing yet -->
+         <!-- info about beer -->
+         <div class="row">
+            <div class="col-md-6">
+               <p>Style: <%=beer.style%></p>
+            </div>
+            <div class="col-md-6">
+               <p>ABV: <%=beer.abv%></p>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-6">
+               <p>IBU: <%=beer.ibu%></p>
+            </div>
+            <div class="col-md-6">
+               <p>Hops: <%=beer.hops%></p>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-6">
+               <p>Additives: <%=beer.additives%></p>
+            </div>
+            <div class="col-md-6">
+               <p></p>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

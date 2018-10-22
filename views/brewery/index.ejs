@@ -2,17 +2,21 @@
 <html>
 <head>
 	<title>Brewery Index Page</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-	<h1>Breweries Near You</h1>
-	<ul>
-		<%breweries.forEach((brewery, i) => {%>
- 			<li><a href="/breweries/<%=brewery.id%>"><%=brewery.name%></a>: </li>
- 				<br>
- 				<p>Rating: <%=brewery.rating%>/5 stars</p>
- 				<br>
- 		<%})%>
-	</ul>
+	<div class="container">
+		<h1>Breweries Near You</h1>
+			<ul>
+				<%breweries.forEach((brewery, i) => {%>
+ 					<li><a href="/breweries/<%=brewery.id%>"><%=brewery.name%></a>: </li>
+ 					<br>
+ 					<p>Rating: <%=brewery.rating%>/5 stars</p>
+ 					<br>
+ 				<%})%>
+			</ul>
+	</div>
+	
 
 </body>
 </html>

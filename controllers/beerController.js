@@ -28,6 +28,19 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/:id', async(req, res, next) => {
+    try {
+        const foundBeer = await Beer.findById(req.params.id);
+        res.render('beer/show.ejs', {
+            beer: foundBeer
+        })
+    } catch (e) {
+        res.send(e, "error");
+        next(e)
+    }
+
+});
+
 //GET - NEW
 
 //POST - CREATE
