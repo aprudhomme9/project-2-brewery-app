@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const request = require('superagent');
+const Content = require('../models/content');
 
 const apiKey = 'AIzaSyAb4dWry_xBx7-bUMmouS848cEOxa2LPxw';
 

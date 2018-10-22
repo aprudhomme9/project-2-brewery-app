@@ -18,11 +18,6 @@ app.use('/breweries', breweryController);
 // app.use('/beers', beerController);
 
 
-app.get('/', (req, res) => {
-	res.render('index.ejs', {
-		
-	})	
-})
 
 
 
