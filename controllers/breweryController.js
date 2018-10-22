@@ -11,8 +11,8 @@ const Brewery = require('../models/brewery');
 
 router.get('/', (req, res) => {
 	request.post('https://www.googleapis.com/geolocation/v1/geolocate?key=' + mapsKey).end((err, response) => {
+
 		const locationData = JSON.parse(response.text);
-		console.log(locationData);
 		const userLat = locationData.location.lat;
 		const userLng = locationData.location.lng;
 
@@ -22,22 +22,22 @@ router.get('/', (req, res) => {
 
 				const breweries = placesData.results;
 
-				const createdBreweries = [];
-
-				for(let i = 0; i < breweries.length; i++) {
-					const createdBrewery = await Brewery.create({
-						name: breweries[i].name, 
-						price: breweries[i].price_level,
-						location: breweries[i].vicinity,
-						rating: breweries[i].rating
-					})
-					await createdBreweries.push(createdBrewery);
-				}
-				//.map
-				console.log(createdBreweries);
-				res.render('./brewery/index.ejs', {
-					breweries: createdBreweries
+				const mappedBreweries = breweries.map((brewery) => {
+					const newObj = {
+						name: brewery.name,
+						price: brewery.price_level,
+						location: brewery.vicinity,
+						rating: brewery.rating
+					}
+					return newObj;
 				})
+
+				Brewery.create(mappedBreweries, (err, createdBreweries) => {
+					res.render('./brewery/index.ejs', {
+					breweries: createdBreweries
+
+				})
+			})
 		})
 	})
 })
