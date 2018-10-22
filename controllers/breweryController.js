@@ -8,8 +8,16 @@ const request = require('superagent');
 
 const apiKey = 'AIzaSyAb4dWry_xBx7-bUMmouS848cEOxa2LPxw';
 
+const mapsKey = 'AIzaSyBzijVyQTE_Odm2-IXZsA3MbzSjk81zQgk';
+
 router.get('/', (req, res) => {
-	request.get('https://maps.googleapis.com/maps/api/place/textsearch/json?input=minneapolis%20breweries&inputtype=textquery&fields=name&key='+ apiKey).end((err, response) => {
+	request.post('https://www.googleapis.com/geolocation/v1/geolocate?key=' + mapsKey).end((err, response) => {
+		const locationData = JSON.parse(response.text);
+		console.log(locationData);
+		const userLat = locationData.location.lat;
+		const userLng = locationData.location.lng;
+
+		 request.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLat + ',' + userLng + '&radius=1500&keyword=breweries&key=' + apiKey).end((err, response) => {
 		
 		const placesData = JSON.parse(response.text);
 
@@ -36,8 +44,6 @@ router.get('/', (req, res) => {
 
 		console.log(placesData);
 
-
-
 		res.render('./brewery/index.ejs', {
 			breweries: breweryNames,
 			addresses: breweryAddresses,
@@ -45,6 +51,8 @@ router.get('/', (req, res) => {
 			rating: breweryRatings
 			// open: breweryOpen
 		})	
+	})
+	
 	})
 })
 
