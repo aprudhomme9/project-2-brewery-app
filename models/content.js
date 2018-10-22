@@ -1,3 +1,86 @@
+const standardReferenceMethod = [
+{
+id: 1,	
+color: '1 Pale Straw',
+img: ''
+},{
+id: 2,
+color: '2 Light Yellow',
+img: ''
+},{
+id: 3,
+color: '3 Straw',
+img: ''
+},{
+id: 4,
+color: '4 Pale Gold',
+img: ''
+},{
+id: 5
+color: '5 Gold',
+img: ''
+},{
+id: 6,
+color: '6 Deep Gold',
+img: ''
+},{
+id: 7,
+color: '7 Light Amber',
+img: ''
+},{
+id: 8, 
+color: '8 Amber',
+img: ''
+},{
+id: 9, 
+color: '9 Medium Amber',
+img: ''
+},{
+id: 10, 
+color: '10 Copper',
+img: ''
+},{
+id: 11,
+color: '11-12 Deep Amber',
+img: []
+},{
+id: 12,
+color: '13-15 Light Brown',
+img: []
+},{
+id: 13,
+color: '16 Saddle Brown',
+img: ''
+}, {
+id: 14,
+color: '17 Amber Brown',
+img: ''
+},{
+id: 15,
+color: '18-23 Brown',
+img: []
+}, {
+id: 16,
+color: '24 Ruby Brown',
+img: ''
+}, {
+id: 17,
+color: '25-29 Dark Brown',
+img: []
+}, {
+id: 18,
+color: '30 Deep Brown',
+img: ''
+}, {
+id: 19,
+color: '31-40 Black'
+img: []
+}];
+
+const fermentation = ['Top', 'Bottom', 'Spontaneous'];
+const origin = ['American', 'English', 'German', 'Belgian', 'Irish', 'Japan'];
+
+
 
 const brewery = [
     {
@@ -468,16 +551,295 @@ const beer = [
 	additives: 'Peppercorns'
 
 }, {
-	name: 'Cptain Haddock Wit'
+	name: 'Captain Haddock Wit'
 	brewery: brewery[10],
 	style: 'Witbier'
 	abv: '5.1%',
-	ibu: 
 	additives: 'Orange, Coriander'
 
 }, {
-	name: 
+	name: 'Unspoken Rule'
 	brewery: brewery[10],
+	style: 'Golden Ale'
+	abv: '5%',
+	additives: 'Jasmine tea'
+
+}, {
+	name: 'AK Warrior',
+	brewery: brewery[11],
+	style: 'Double IPA'
+	abv: '8.5%'
+	ibu: '93 IBU'
+
+}, {
+	name: 'C-Lo'
+	brewery: brewery[11],
+	style: 'Session Pale Ale'
+	abv: '5.1%'
+	ibu: '32 IBU'
+	hops: 'Columbus, Citra, Cascade'
+
+}, {
+	name: 'Divinations'
+	brewery: brewery[11],
+	style: 'Coffee Milk Stout'
+	abv: '7.6%'
+	ibu: '40 IBU'
+
+}, {
+	name: 'Face Melter'
+	brewery: brewery[12],
+	style: 'IPA'
+	abv: '7%',
+	hops: 'Citra, Centennial, Cascade'
+	additives: 'Hibiscus'
+
+}, {
+	name: 'Balloon Boy'
+	brewery: brewery[12],
+	style: 'Farmhouse Wheat Ale'
+	abv: '5%'
+
+}, {
+	name: 'The Illusionist'
+	brewery: brewery[12],
+	style: 'Session IPA'
+	abv: '4.8%'
+
+}, {
+	name: 'Charm Stone'
+	brewery: brewery[13],
+	style: 'Fruited Sour'
+	abv: '5.5%'
+	ibu: '10 IBU'
+	additives: 'Plum, Peach, Apricot'
+
+}, {
+	name: 'Argent v2'
+	brewery: brewery[13], 
+	style: 'Dry Hopped IPA'
+	abv: '6.4%'
+	ibu: '65 IBU'
+	hops: 'Amarillo, Citra, Columbus'
+	additives:
+
+}, {
+	name: 'Pour Le Mineur'
+	brewery: brewery[13],
+	style: 'Grisette'
+	abv: '4.2%'
+	ibu: '20 IBU'
+	additives: 'Chamomile, Lemon Peel'
+
+}, {
+	name: 'Mexico Calling'
+	brewery: brewery[13],
+	style: 'Lager'
+	abv: '4.6%'
+
+}, {
+	name: 'Smoke Alley'
+	brewery: brewery[13],
+	style: 'Smoked Wheat Ale'
+	abv: '4.8%'
+
+}, {
+	name: 'Pastry War'
+	brewery: brewery[13],
+	style: 'Vienna Style Lager'
+	abv: '5.3%'
+
+}, {
+	name: 'Dovetail Altbier'
+	brewery: brewery[14],
+	style: 'Altbier'
+	abv: '5.1%'
+
+}, {
+	name: 'Dovetail Dunkel'
+	brewery: brewery[14],
+	style: 'Dunkel'
+	abv: '4.8%'
+
+}, {
+	name: 'Dovetail Festbier'
+	brewery: brewery[14],
+	style: 'Marzen'
+	abv: '7.2%'
+
+}, {
+	name: 'Blockbuster'
+	brewery: brewery[15],
+	style: 'Red Ale'
+	abv: '6.5%'
+}, {
+	name: 'Shark Meets Hipster'
+	brewery: brewery[15],
+	style: 'Wheat IPA'
+	abv: '6.5%'
+}, {
+	name: 'Wheatless in Seattle'
+	brewery: brewery[15],
+	style: 'Hefeweizen'
+	abv: '6.3%'
+}, {
+	name: 'Electron Smash'
+	brewery: brewery[16],
+	style: 'APA'
+	abv: '4.5%'
+	ibu: '30 IBU'
+}, {
+	name: 'Symbiotic'
+	brewery: brewery[16],
+	style: 'Sour'
+	abv: '4.8%'
+	ibu: '7 IBU'
+}, {
+	name: 'Cold Fusion'
+	brewery: brewery[16],
+	style: 'Cream Ale'
+	abv: '5.2%'
+	ibu: '18 IBU'
+}, {
+	name: 'Junction Grove'
+	brewery: brewery[17],
+	style: 'American Rye'
+	abv: '6%'
+
+}, {
+	name: 'So Fresh Saison'
+	brewery: brewery[17],
+	style: 'Saison'
+	abv: '6%'
+
+}, {
+	name: 'Flagship: C.R.E.A.M.'
+	brewery: brewery[17],
+	style: 'Cream Ale'
+	abv: '4.5%'
+
+}, {
+	name: 'Walking Phoenix'
+	brewery: brewery[18],
+	style: 'Belgian IPA'
+	abv: '6.6%'
+
+
+}, {
+	name: 'Semtempbierfest'
+	brewery: brewery[18],
+	style: 'Lager'
+	abv: '5.6%'
+
+}, {
+	name: 'End Note'
+	brewery: brewery[18],
+	style: 'Sour'
+	abv: '5%'
+	hops: 'Hallertau Blanc, Mandarina Bavaria'
+
+}, {
+	name: 'Tacocat'
+	brewery: brewery[19],
+	style: 'Sour'
+	abv: '5%'
+	ibu: '10 IBU'
+
+}, {
+	name: 'Turtles All the Way Down'
+	brewery: brewery[19],
+	style: 'Sour'
+	abv: '5.2%'
+	ibu: '20 IBU'
+
+}, {
+	name: 'A Hoppy Bird'
+	brewery: brewery[19],
+	style: 'IPA'
+	abv: '6.5%'
+	ibu: 'IBU 55'
+	hops: 'Citra, Blanc'
+
+}, {
+	name: 'Sparkling Rose'
+	brewery: brewery[20],
+	style: 'Biere Brut'
+	abv: '10.2%'
+	ibu: '11 IBU'
+	hops:
+	additives: 'Hibiscus, Niagra Grapes'
+
+}, {
+	name: 'Fernetic'
+	brewery: brewery[20],
+	style: 'Imperial Black Ale'
+	abv: '8.4%'
+	ibu: 
+	hops:
+	additives:'Rhubarb Root, Peppermint, Saffron, Wormwood, Angelica, Anise'
+
+}, {
+	name: 'Snoochie Boochies'
+	brewery: brewery[20],
+	style: 'IPA'
+	abv: '8%'
+	ibu: '63 IBU'
+}, {
+	name: 'LaSalle St. Lager'
+	brewery: brewery[21],
+	style: 'Helles'
+	abv: '5.2%'
+	ibu: 
+	hops: 'German Magnum'
+	additives:
+
+}, {
+	name: 'Witte Chicks Dig Me'
+	brewery: brewery[21],
+	style: 'Witbier'
+	abv: '4.8%'
+	ibu: 
+	hops: 'East Kent Goldings'
+	additives: 'Coriander, Orange Peel'
+
+}, {
+	name: 'Broken English'
+	brewery: brewery[21],
+	style: 'ESB'
+	abv: '5.7%'
+	ibu: 
+	hops: 'East Kent Goldings, Challenger'
+	additives:
+
+}, {
+	name: 'Matilda'
+	brewery: brewery[21],
+	style: 'Belgian Strong Pale Ale'
+	abv: '7%'
+}, {
+	name: 'Sofie'
+	brewery: brewery[21],
+	style: 'Belgian Saison'
+	abv: '6.5%'
+	additives: 'Citrus Peel'
+
+}, {
+	name: '312 Urban Wheat'
+	brewery: brewery[21],
+	style: 'Pale Wheat Ale'
+	abv: '4.4%'
+}, {
+	name: 'GCBC German-Style Helles Lager'
+	brewery: brewery[22],
+	style: 'Helles'
+	abv: '5.5%'
+	ibu: '18 IBU'
+	hops: 
+	additives:
+
+}, {
+	name: 
+	brewery: brewery[22],
 	style: 
 	abv: 
 	ibu: 
@@ -486,61 +848,7 @@ const beer = [
 
 }, {
 	name: 
-	brewery: 
-	style: 
-	abv: 
-	ibu: 
-	hops:
-	additives:
-
-}, {
-	name: 
-	brewery: 
-	style: 
-	abv: 
-	ibu: 
-	hops:
-	additives:
-
-}, {
-	name: 
-	brewery: 
-	style: 
-	abv: 
-	ibu: 
-	hops:
-	additives:
-
-}, {
-	name: 
-	brewery: 
-	style: 
-	abv: 
-	ibu: 
-	hops:
-	additives:
-
-}, {
-	name: 
-	brewery: 
-	style: 
-	abv: 
-	ibu: 
-	hops:
-	additives:
-
-}, {
-	name: 
-	brewery: 
-	style: 
-	abv: 
-	ibu: 
-	hops:
-	additives:
-
-}, {
-	name: 
-	brewery: 
+	brewery: brewery[22],
 	style: 
 	abv: 
 	ibu: 
