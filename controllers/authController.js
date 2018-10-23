@@ -22,6 +22,7 @@ router.post('/login', async (req, res) => {
       if(bcrypt.compareSync(req.body.password, foundUser.password)) {
         req.session.loggedIn = true;
         req.session.username = foundUser.username;
+        
         res.redirect('../breweries')
       } else {
         req.session.message = 'Username or Password Already Exists';
