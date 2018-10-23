@@ -5,8 +5,8 @@ const Beer = require('../models/beer');
 const Brewery = require('../models/brewery');
 
 
-router.get('/:id', async (req, res) => {
-	const foundUser = await User.findById(req.params.id);
+router.get('/', async (req, res) => {
+	const foundUser = await User.findOne({username: req.session.username});
 
 	res.render('./user/profile.ejs', {
 		user: foundUser
