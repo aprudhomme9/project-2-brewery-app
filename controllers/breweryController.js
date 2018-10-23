@@ -53,33 +53,24 @@ router.get('/:id', (req, res) => {
 
 			const thisBrewery = breweryDetails.result;
 
-			request.get('https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&maxheight=400&photoreference=' + thisBrewery.photos[0].photo_reference + '&key=' + placesKey).end((err, response) => {
+			request.get('https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&maxheight=400&photoreference=' + thisBrewery.photos[0].photo_reference + '&key=' + placesKey).end(async (err, response) => {
 				
 				// console.log(thisBrewery);
 				const breweryPicture = response;
 
 
-				Brewery.findOneAndUpdate(req.params.id, {
+				const updatedBrewery = await Brewery.findOneAndUpdate(req.params.id, {
 					location: thisBrewery.formatted_address,
 					website: thisBrewery.website,
 					phone: thisBrewery.formatted_phone_number,
-					map: thisBrewery.url
-				}, (err, updatedBrewery) => {
-						console.log(updatedBrewery);
-						res.render('./brewery/show.ejs', {
-						// these were not updating synchronously even w/ async/await, so I'm hardcoding in the API results. Will refactor --> looks like shit
-						brewery: updatedBrewery,
-
-						address: thisBrewery.formatted_address,
-
-						website: thisBrewery.website,
-
-						phone: thisBrewery.formatted_phone_number,
-
-						url: thisBrewery.url,
+					map: thisBrewery.url,
+					rating: thisBrewery.rating,
+					photo: breweryPicture.redirects[0]
+				})
+					res.render('./brewery/show.ejs', {
+					brewery: updatedBrewery,
 						// I know these pictures are janky, we'll figure out a better way to do this
-						photo: breweryPicture.redirects[0]
-					})
+					photo: breweryPicture.redirects[0]
 				})
 			})
 		})
