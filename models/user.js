@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('./user');
+const mongoose = require('mongoose');
 
 const Brewery = require('./brewery');
 const Beer = require('./beer');

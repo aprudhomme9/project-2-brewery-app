@@ -1,26 +1,28 @@
  <% include ../partials/header.ejs %>
-	 <div class="row">
-          <div class="col-md-2"><a href="/breweries">Breweries</a></div>
-          <div class="col-md-2"><a href="/beer">Beers</a></div>
-          <div class="col-md-2"><a href="">Profile</a></div>
-     </div>
-	<br>
 	<div class="container">
 		
-			<h1><%=brewery.name%></h1>
+<div class="container">
+        
+            <h1><%=brewery.name%></h1>
 
-			<div class = 'list-item-info'>
-				<h5>Consensus Rating: <%=brewery.rating%>/5 stars</h5>
-				<h5>Price Level: <%=brewery.price%></h5>
-				<h5>Brewery Address: <a href="<%=brewery.map%>"><%=brewery.location%></a></h5>
-				<h5>Telephone: <%=brewery.phone%></h5>
-			</div>
-			
-			<img class=''src=<%=photo%>>
+            <div class = 'list-item-info'>
+                <h5>Consensus Rating: <%=brewery.rating%>/5 stars</h5>
+                <h5>Price Level: <%=brewery.price%></h5>
+                <h5>Address: <a href="<%=brewery.map%>"><%=brewery.location%></a></h5>
+                <h5>Phone: <%=brewery.phone%></h5>
+            </div>
 
-	<br>
-		<div class="row">
-			<a href="<%=brewery.website%>"><%=brewery.name%> Website</a>
-		</div>
-	</div>
-	
+            <div>
+                <h3>Hours: </h3>
+                <%brewery.hours.forEach((hour) => {%>
+                <div class="list-item-info">
+                    <li><%=hour%></li>
+                </div>
+                <%})%>
+            </div>
+
+    <br>
+        <div class="row">
+            <a href="<%=brewery.website%>"><%=brewery.name%> Website</a>
+        </div>
+    </div>

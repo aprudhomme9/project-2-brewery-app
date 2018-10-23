@@ -6,24 +6,34 @@
 </head>
 <body>
 <header>
+  <div class="container-fluid">
   <nav>
-    <a class="col-md-1" href="/breweries"></a>
-    | <a class="col-md-1" href="/beer"></a>
-    | <a class="col-md-1" href="/user"></a>
+    <div class="row">
+    <a class="col-md-1" href="/breweries">Breweries</a>
+    | <a class="col-md-1" href="/beer">Beer</a>
+    | <a class="col-md-1" href="/user">Profile</a>
+<%if(!loggedIn){%>
+    <form action="/auth/login" method="POST">
+     Username: <input class="col-md-3" type="username" name="username" placeholder="username">
+     Password: <input class="col-md-3" type="password" name="password" placeholder="password">
+    <button class="col-md-2">Login</button>
+    </form>
+    <button class= "col-md-1"href="/auth/register">Register</button>
   </nav>
-<%if(!username){%>
-  <nav>
-    <form action="/" method="POST">
-    | <input type="username" name="usernamer" placeholder="username">
-    | <input type="password" name="password" placeholder="password">
-    <button>Login</button>
-     </form>
-    | <button href="/auth/register">Register</button>
+</div>
     <%} else {%>
-      | <small><%=username%></small>
+      | <small class="col-md-9"><%=username%></small>
         <a href="/">Log out</a>
     <%}%>
   </nav>
+  </div>
+  <div class="row">
+    <!-- Space between -->
+    <div class="col-md-12">
+    <p> Set line image here with CSS </p>
+    </div>
+  </div>
+</div>
 </header>
 </body>
 </html>
