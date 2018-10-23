@@ -16,9 +16,11 @@
     <form action="/auth/login" method="POST">
      Username: <input class="col-md-3" type="username" name="username" placeholder="username">
      Password: <input class="col-md-3" type="password" name="password" placeholder="password">
+     <div class="input-group-append">
     <button class="col-md-2">Login</button>
+    </div>
     </form>
-    <button class= "col-md-1"href="/auth/register">Register</button>
+    <a class= "col-md-1" href="/auth/register">Register</a>
   </nav>
 </div>
     <%} else {%>

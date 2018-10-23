@@ -56,6 +56,7 @@ router.post('/login', async (req, res, next) => {
     })
     if(!foundUser) {
       req.session.message = "Invalid username or password"; 
+      res.redirect('/')
     } else {
       if(foundUser.password == req.body.password) {
         req.session.loggedIn = true;
@@ -63,6 +64,7 @@ router.post('/login', async (req, res, next) => {
         res.redirect('/')
       } else {
          req.session.message = "Invalid username or password"; 
+         res.redirect('/')
       }
     }
   } catch(err) {
