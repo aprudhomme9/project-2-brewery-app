@@ -8,7 +8,7 @@ const beerSchema = new mongoose.Schema({
 	},
 	brewery: Brewery.schema,
 	reviews: String, //[Review.Schema],
-	kind: String, //Dropdown to keep beers organized
+	style: String, //Dropdown to keep beers organized
 	abv: String, // Dropdown percentage
 	ibu: String, //Dropdown
 	picture: [String], //Allow user to upload pictures? Warn user these will be public?
