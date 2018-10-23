@@ -5,19 +5,19 @@ const jQuery  = require('jquery');
 
 module.exports.beerSearch = (query, callback) => {
 
-    let url = "http://beeradvocate.com/search/?q=" + encodeURIComponent(query) + "&qt=beer";
+    let url = "https://untappd.com/search?q=" + encodeURIComponent(query) + "&type=beer&sort=all";
 
     request(url, function (error, response, html) {
 
         if (!error && response.statusCode == 200) {
 
             var $ = cheerio.load(html);
-            console.log($);
+        
 
             let beers = [];
 
-            $('#ba-content div div a').each(function(beersearch) {
-
+            $('.beer-item').each(function(beersearch) {
+                setTimeOut(() => {}, 2000)
                 // One brewery listing
                 let beer = $(this);
             
@@ -26,25 +26,29 @@ module.exports.beerSearch = (query, callback) => {
                 //Get to span from content
 
                 // Beer details
-                    beer_name = beer.text(),
-                    beer[0].attribs['href'];
-                    // beer_url = beer[0].attributes[0].nodeValue
+                    beer_name = beer.find('.name').text();
+                    beer_url = beer.find('.name').children().attr('href');
+                    beer_style = beer.children().find('.style').text();
+                    beer_abv = beer.children().find('.abv').text();
+                    beer_ibu = beer.children().find('.ibu').text();
+                    beer_img = beer.find('.label').children().attr('src');
 
                 //Brewery details
-                let brewery = beer.nextAll().eq(1)
-                console.log(brewery, 'brewery -----------------');
-                    brewery_name = brewery.text();
-                    brewery_url = brewery[0].attribs['href'];
-                    brewery_location = brewery.nextAll().eq(1).text();
-                    console.log(brewery_location, "brewery location test");
+                    brewery = beer.find('.brewery');
+                    brewery_name = brewery.children().text();
+                    brewery_url = brewery.children().attr('href')
+
 
                 // Data to return
                 let data = {
-                    beer_name: beer_name,
-                    beer_url: brewery_url,
+                    name: beer_name,
+                    url: "https://untappd.com" + beer_url,
+                    style: beer_style,
+                    abv: beer_abv,
+                    ibu: beer_ibu,
+                    img: beer_img,
                     brewery_name: brewery_name,
-                    brewery_location: brewery_location,
-                    brewery_url: brewery_url
+                    brewery_url: "https://untappd.com" + brewery_url
                 };
                 
                 // Add to beer array

@@ -4,7 +4,7 @@ const jQuery  = require('jquery');
 
 module.exports.brewerySearch = (query, callback) => {
 
-    let url = "http://beeradvocate.com/search/?q=" + encodeURIComponent(query) + "&qt=place";
+    let url = "https://untappd.com/search?q=" + encodeURIComponent(query) + "&type=brewery&sort=";
 
     request(url, function (error, response, html) {
 
