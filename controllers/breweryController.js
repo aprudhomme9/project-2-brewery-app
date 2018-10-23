@@ -35,12 +35,12 @@ router.get('/', (req, res) => {
                 Brewery.create(mappedBreweries, (err, createdBreweries) => {
 
                     res.render('./brewery/index.ejs', {
-                    loggedIn: req.session.loggedIn,
-            		username: req.session.username,
-                    breweries: createdBreweries
+	                    loggedIn: req.session.loggedIn,
+	            		username: req.session.username,
+	                    breweries: createdBreweries
 
-                })
-            })
+	                })
+	            })
         })
     })
 })
@@ -66,8 +66,8 @@ router.get('/:id', async (req, res) => {
                 hours: thisBrewery.opening_hours.weekday_text
             },     {new: true})
 
-       		 await updatedBrewery.save();
-            	res.render('./brewery/show.ejs', {
+       		await updatedBrewery.save();
+        	res.render('brewery/show.ejs', {
             	loggedIn: req.session.loggedIn,
             	username: req.session.username,
             	brewery: updatedBrewery

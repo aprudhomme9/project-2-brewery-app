@@ -3,20 +3,25 @@
 <html>
 <head>
 	<title></title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
 	<nav>
-    	<div class="row">
-    		<a class="col-md-1" href="/breweries">Breweries</a>
-    		| <a class="col-md-1" href="/beer">Beer</a>
-    	</div>
-	</nav>	
+		<a class="col-md-1" href="/breweries">Breweries</a>
+		| <a class="col-md-1" href="/beer">Beer</a>
+
+	</nav>
+
 
 <div class='container'>
 	<h1><%=user.username%>'s Brewr Profile</h1>
 	
 	<div class='col-lg-6'>
 		<h3><%=user.username%>'s Breweries: </h3>
+    			<%breweries.forEach((brewery) => {%>
+    				<li><%=brewery.name%></li>
+    			<%})%>
+
 		<h3><%=user.username%>'s Beers: </h3>
 	</div>
 

@@ -10,15 +10,27 @@ const Brewery = require('../models/brewery');
 
 
 
-//POST - CREATE
+// check in 
+router.post('/', async (req, res) => {
+	// get user
+	const foundBrewery = await Brewery.findById(req.body._id);
+	console.log(foundBrewery);
+	const foundUser = await User.findOne({username: req.session.username});
 
+	await foundUser.breweries.push(foundBrewery);
+
+	await foundUser.save();
+	res.redirect('/user');
+
+})
 //GET = SHOW
 router.get('/', async (req, res) => {
 	const foundUser = await User.findOne({username: req.session.username});
 	console.log(req.session.loggedIn);
 	if(foundUser) {
 		res.render('./user/profile.ejs', {
-		user: foundUser
+		user: foundUser,
+		breweries: foundUser.breweries
 	})
 	} else {
 		res.redirect('../breweries');

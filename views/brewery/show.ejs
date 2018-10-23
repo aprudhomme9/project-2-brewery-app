@@ -14,13 +14,17 @@
 
 			<div>
 				<h3>Hours: </h3>
-				<%if (brewery.hours !== undefined) {%>
+				<%if (brewery.hours) {%>
 				<%brewery.hours.forEach((hour) => {%>
 				<div class="list-item-info">
 					<li><%=hour%></li>
 				</div>
 				<%})}%>
 			</div>
+			<form action="/user" method="post">
+				<input type="hidden" name="_id" value="<%=brewery.id%>">
+				<button type="submit" value="Check In">Check In</button>
+			</form>
 
     <br>
         <div class="row">
