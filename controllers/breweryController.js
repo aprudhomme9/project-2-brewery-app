@@ -27,8 +27,7 @@ router.get('/', (req, res) => {
 						name: brewery.name,
 						price: brewery.price_level,
 						rating: brewery.rating,
-						placeid: brewery.place_id,
-
+						placeid: brewery.place_id
 					}
 					return newObj;
 				})
@@ -44,7 +43,7 @@ router.get('/', (req, res) => {
 		})
 	})
 })
-// need to refactor this whole route
+
 router.get('/:id', (req, res) => {
 	Brewery.findById(req.params.id, (err, foundBrewery) => {
 		request.get('https://maps.googleapis.com/maps/api/place/details/json?placeid=' + foundBrewery.placeid + '&key=' + mapsKey).end((err, response) => {
@@ -55,22 +54,21 @@ router.get('/:id', (req, res) => {
 
 			request.get('https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&maxheight=400&photoreference=' + thisBrewery.photos[0].photo_reference + '&key=' + placesKey).end(async (err, response) => {
 				
-				// console.log(thisBrewery);
 				const breweryPicture = response;
 
-
-				const updatedBrewery = await Brewery.findOneAndUpdate(req.params.id, {
+				Brewery.findOneAndUpdate({name: thisBrewery.name}, {
 					location: thisBrewery.formatted_address,
 					website: thisBrewery.website,
-					phone: thisBrewery.formatted_phone_number,
+					phone: thisBrewery.phone,
 					map: thisBrewery.url,
 					rating: thisBrewery.rating,
-					photo: breweryPicture.redirects[0]
-				})
+					photo: breweryPicture.redirects[0],
+					price: thisBrewery.price_level
+				}, (err, updatedBrewery) => {
 					res.render('./brewery/show.ejs', {
-					brewery: updatedBrewery,
-						// I know these pictures are janky, we'll figure out a better way to do this
-					photo: breweryPicture.redirects[0]
+						brewery: updatedBrewery,
+						photo: breweryPicture.redirects[0]
+					})
 				})
 			})
 		})

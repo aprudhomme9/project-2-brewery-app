@@ -16,10 +16,13 @@
 				<div class="row">
 				<%breweries.forEach((brewery, i) => {%>
 					<div class='col-md-4'>
-						<a href="/breweries/<%=brewery.id%>"><%=brewery.name%></a>
+						<div class='list-group'>
+							<a href="/breweries/<%=brewery.id%>"><%=brewery.name%></a>
+						</div>
  						<br>
-
- 						<p><%=brewery.rating%>/5 stars</p>
+ 						<div class="list-group-item-info">
+ 							<p><%=brewery.rating%>/5 stars</p>
+ 						</div>
  						<br>
 					</div>
  				<%})%>

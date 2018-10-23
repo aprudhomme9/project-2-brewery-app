@@ -12,22 +12,17 @@
      </div>
 	<br>
 	<div class="container">
-		<header>
-			<div class="row">
+		
 			<h1><%=brewery.name%></h1>
-		</header>
-	
-		<div class='col-md-6'>
-			<section>
+
+			<div class = 'list-item-info'>
 				<h5>Consensus Rating: <%=brewery.rating%>/5 stars</h5>
 				<h5>Price Level: <%=brewery.price%></h5>
 				<h5>Brewery Address: <a href="<%=brewery.map%>"><%=brewery.location%></a></h5>
 				<h5>Telephone: <%=brewery.phone%></h5>
-			</section>
+			</div>
 			
-			<img src=<%=photo%>>
-			
-		</div>
+			<img class=''src=<%=photo%>>
 
 	<br>
 		<div class="row">

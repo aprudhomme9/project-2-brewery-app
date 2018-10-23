@@ -13,6 +13,7 @@ const Brewery = require('./models/brewery');
 const content = require('./models/content');
 const breweryController = require('./controllers/breweryController');
 const beerController = require('./controllers/beerController');
+const userController = require('./controllers/userController');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
@@ -23,6 +24,7 @@ app.use(methodOverride('_method'));
 
 app.use('/breweries', breweryController);
 app.use('/beer', beerController);
+app.use('/user', userController);
 
 
 
