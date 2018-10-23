@@ -18,6 +18,8 @@ router.get('/', async (req, res) => {
                 console.log(err, "error");
             } else {
                 res.render('beer/index.ejs', {
+            	loggedIn: req.session.loggedIn,
+            	username: req.session.username,
                 beer: foundBeers
                 });    
             }
@@ -32,6 +34,8 @@ router.get('/:id', async(req, res, next) => {
     try {
         const foundBeer = await Beer.findById(req.params.id);
         res.render('beer/show.ejs', {
+            username: req.session.username,
+    		loggedIn: req.session.loggedIn,
             beer: foundBeer
         })
     } catch (e) {

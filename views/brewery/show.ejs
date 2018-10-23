@@ -1,19 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<title>Brewery Show Page</title>
-</head>
-<body>
-	 <div class="row">
-          <div class="col-md-2"><a href="/breweries">Breweries</a></div>
-          <div class="col-md-2"><a href="/beer">Beers</a></div>
-          <div class="col-md-2"><a href="">Profile</a></div>
-     </div>
-	<br>
+ <% include ../partials/header.ejs %>
 	<div class="container">
 		
-			<h1><%=brewery.name%></h1>
+<div class="container">
+        
+            <h1><%=brewery.name%></h1>
 
 			<div class = 'list-item-info'>
 				<h5>Consensus Rating: <%=brewery.rating%>/5 stars</h5>
@@ -31,11 +21,25 @@
 				<%})%>
 			</div>
 
-	<br>
-		<div class="row">
-			<a href="<%=brewery.website%>"><%=brewery.name%> Website</a>
-		</div>
-	</div>
-	
-</body>
-</html>
+            <div class = 'list-item-info'>
+                <h5>Consensus Rating: <%=brewery.rating%>/5 stars</h5>
+                <h5>Price Level: <%=brewery.price%></h5>
+                <h5>Address: <a href="<%=brewery.map%>"><%=brewery.location%></a></h5>
+                <h5>Phone: <%=brewery.phone%></h5>
+            </div>
+
+
+            <div>
+                <h3>Hours: </h3>
+                <%brewery.hours.forEach((hour) => {%>
+                <div class="list-item-info">
+                    <li><%=hour%></li>
+                </div>
+                <%})%>
+            </div>
+
+    <br>
+        <div class="row">
+            <a href="<%=brewery.website%>"><%=brewery.name%> Website</a>
+        </div>
+    </div>
