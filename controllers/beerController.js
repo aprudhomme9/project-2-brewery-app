@@ -33,6 +33,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async(req, res, next) => {
     try {
         const foundBeer = await Beer.findById(req.params.id);
+        console.log(foundBeer);
         res.render('beer/show.ejs', {
             username: req.session.username,
             loggedIn: req.session.loggedIn,
