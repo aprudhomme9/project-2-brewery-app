@@ -4,53 +4,40 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
 //Register Render
-router.get('/register', async (req, res, next) => {
-  res.render('auth/register.ejs', {
-  	loggedIn: req.session.loggedIn,
-    message: req.session.message,
-    username: req.session.username
 
-  });
-});
-
-//Register Post
-router.post('/register', async (req, res, next) => {
-  try {
-    const desiredUsername = req.body.username;
-    // make sure no other people have this username
-    const user = await User.find({
-      username: desiredUsername
-    })
-    console.log(user);
-    if(user.length > 0) {
-      req.session.message = "Username already taken!"
-      res.redirect('/auth/register')
-    }
-
-    else {
-      const createdUser = await User.create({
-        username: desiredUsername,
-        password: req.body.password
-      })
-      res.redirect('/')
-    }
-
-  } catch(err) {
-    next(err)
-  }
-
+router.get('/register', async (req, res) => {
+  res.render('./auth/register.ejs')
 })
 
-//Login Render
-// router.get('/login', async (req, res, next) => {
-//   res.render('/', {
-//     message: req.session.message,
-//     username: req.session.username
-//   });
-// });
-//Login Post
-router.post('/login', async (req, res, next) => {
+router.post('/register', async (req, res) => {
   try {
+    const password = req.body.password;
+
+    const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+
+    const userEntry = {};
+    userEntry.username = req.body.username;
+    userEntry.password = passwordHash;
+
+    const user = await User.create(userEntry);
+    await user.save();
+
+    req.session.username = req.body.username;
+    req.session.loggedIn = true;
+
+    res.redirect('../breweries');
+
+    console.log(req.session.loggedIn);
+    console.log(user);
+  } catch (err) {
+    res.send(err)
+  }
+  
+})
+
+router.post('/login', async (req, res) => {
+  try {
+<<<<<<< HEAD
     const foundUser = await User.findOne({
       username: req.body.username
     })
@@ -59,25 +46,44 @@ router.post('/login', async (req, res, next) => {
       res.redirect('/')
     } else {
       if(foundUser.password == req.body.password) {
+=======
+    const foundUser = await User.findOne({username: req.body.username});
+    console.log(foundUser);
+
+    if(foundUser) {
+      if(bcrypt.compareSync(req.body.password, foundUser.password)) {
+>>>>>>> 3034232d9e6506c8991c2b3240fac9900ec6c92d
         req.session.loggedIn = true;
-        req.session.username = req.body.username;
-        res.redirect('/')
+
+        res.redirect('../breweries', {
+          username: foundUser.username,
+          password: foundUser.password
+        })
       } else {
+<<<<<<< HEAD
          req.session.message = "Invalid username or password"; 
          res.redirect('/')
+=======
+        req.session.message = 'Username or Password Already Exists';
+        res.redirect('/auth/register');
+>>>>>>> 3034232d9e6506c8991c2b3240fac9900ec6c92d
       }
+    } else {
+      req.session.message = "Username does not exist";
+      res.redirect('/auth/register');
     }
-  } catch(err) {
-    next(err)
+  } catch (err) {
+    res.send(err)
   }
 })
+
 
 //Logout Get
 router.get('/logout', (req, res) => {
   req.session.destroy((err) => {
     res.redirect('/', {
-    	username: req.session.username,
-    	loggedIn: req.session.loggedIn
+        username: req.session.username,
+        loggedIn: req.session.loggedIn
     });
   });
 });

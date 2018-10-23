@@ -10,7 +10,9 @@ require('./db/db');
 
 const Beer = require('./models/beer');
 const Brewery = require('./models/brewery');
-const content = require('./models/content');
+const Content = require('./models/content');
+const User = require('./models/user');
+
 
 
 
