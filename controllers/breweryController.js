@@ -39,41 +39,47 @@ router.get('/', (req, res) => {
 					breweries: createdBreweries
 
 				})
-			}) 
-		})
-	})
-})
-
-router.get('/:id', (req, res) => {
-	Brewery.findById(req.params.id, (err, foundBrewery) => {
-		request.get('https://maps.googleapis.com/maps/api/place/details/json?placeid=' + foundBrewery.placeid + '&key=' + mapsKey).end((err, response) => {
-
-			const breweryDetails = JSON.parse(response.text);
-
-			const thisBrewery = breweryDetails.result;
-
-			request.get('https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&maxheight=400&photoreference=' + thisBrewery.photos[0].photo_reference + '&key=' + placesKey).end(async (err, response) => {
-				
-				const breweryPicture = response;
-
-				Brewery.findOneAndUpdate({name: thisBrewery.name}, {
-					location: thisBrewery.formatted_address,
-					website: thisBrewery.website,
-					phone: thisBrewery.phone,
-					map: thisBrewery.url,
-					rating: thisBrewery.rating,
-					photo: breweryPicture.redirects[0],
-					price: thisBrewery.price_level
-				}, (err, updatedBrewery) => {
-					res.render('./brewery/show.ejs', {
-						brewery: updatedBrewery,
-						photo: breweryPicture.redirects[0]
-					})
-				})
 			})
 		})
 	})
 })
+
+router.get('/:id', async (req, res) => {
+	try {
+		const foundBrewery = await Brewery.findById(req.params.id);
+
+		request.get('https://maps.googleapis.com/maps/api/place/details/json?placeid=' + foundBrewery.placeid + '&key=' + placesKey).end(async (err, response) => {
+			const details = JSON.parse(response.text);
+
+			const thisBrewery = details.result;
+			console.log(thisBrewery);
+			// const photoResponse = await request.get('https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&maxheight=400&photoreference='+ thisBrewery.photos[0].photo_reference + '&key=' + placesKey).end();
+
+			const updatedBrewery = await Brewery.findOneAndUpdate({name: thisBrewery.name}, 
+			{	
+				location: thisBrewery.formatted_address,
+				website: thisBrewery.website,
+				phone: thisBrewery.formatted_phone_number,
+				map: thisBrewery.url,
+				rating: thisBrewery.rating,
+				// photo: breweryPicture.redirects[0],
+				price: thisBrewery.price_level,
+				hours: thisBrewery.opening_hours.weekday_text
+			}, 	{new: true})
+
+		await updatedBrewery.save();
+			res.render('./brewery/show.ejs', {
+			brewery: updatedBrewery
+			// photo: photoResponse.redirects[0]
+			})
+
+		});
+
+	} catch (err) {
+		res.send(err)
+	}
+})
+
 
 //Login INDEX POST
 // router.post('/', async (req, res, next) => {

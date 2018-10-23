@@ -17,7 +17,8 @@ const brewerySchema = new mongoose.Schema({
 	reviews: [String], //Public
 	notes: [String],
 	placeid: String,
-	map: String
+	map: String,
+	hours: [String]
 });
 
 module.exports = mongoose.model('Brewery', brewerySchema);

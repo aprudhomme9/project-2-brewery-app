@@ -18,11 +18,18 @@
 			<div class = 'list-item-info'>
 				<h5>Consensus Rating: <%=brewery.rating%>/5 stars</h5>
 				<h5>Price Level: <%=brewery.price%></h5>
-				<h5>Brewery Address: <a href="<%=brewery.map%>"><%=brewery.location%></a></h5>
-				<h5>Telephone: <%=brewery.phone%></h5>
+				<h5>Address: <a href="<%=brewery.map%>"><%=brewery.location%></a></h5>
+				<h5>Phone: <%=brewery.phone%></h5>
 			</div>
-			
-			<img class=''src=<%=photo%>>
+
+			<div>
+				<h3>Hours: </h3>
+				<%brewery.hours.forEach((hour) => {%>
+				<div class="list-item-info">
+					<li><%=hour%></li>
+				</div>
+				<%})%>
+			</div>
 
 	<br>
 		<div class="row">
