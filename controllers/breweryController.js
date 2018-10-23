@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 		const userLat = locationData.location.lat;
 		const userLng = locationData.location.lng;
 
-		 request.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLat + ',' + userLng + '&radius=50000&keyword=brewery&key=' + placesKey).end(async (err, response) => {
+		 request.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLat + ',' + userLng + '&radius=43700&keyword=brewery&key=' + placesKey).end((err, response) => {
 	
 				const placesData = JSON.parse(response.text);
 
@@ -27,13 +27,16 @@ router.get('/', (req, res) => {
 						name: brewery.name,
 						price: brewery.price_level,
 						rating: brewery.rating,
-						placeid: brewery.place_id
+						placeid: brewery.place_id,
+
 					}
 					return newObj;
 				})
 
 				Brewery.create(mappedBreweries, (err, createdBreweries) => {
+
 					res.render('./brewery/index.ejs', {
+
 					breweries: createdBreweries
 
 				})
@@ -41,27 +44,42 @@ router.get('/', (req, res) => {
 		})
 	})
 })
-
+// need to refactor this whole route
 router.get('/:id', (req, res) => {
 	Brewery.findById(req.params.id, (err, foundBrewery) => {
-		request.get('https://maps.googleapis.com/maps/api/place/details/json?placeid=' + foundBrewery.placeid + '&key=' + mapsKey).end(async (err, response) => {
+		request.get('https://maps.googleapis.com/maps/api/place/details/json?placeid=' + foundBrewery.placeid + '&key=' + mapsKey).end((err, response) => {
 
 			const breweryDetails = JSON.parse(response.text);
 
-			const thisBrewery = breweryDetails.result
+			const thisBrewery = breweryDetails.result;
 
-			Brewery.findByIdAndUpdate(req.params.id, {
-				location: thisBrewery.formatted_address,
-				website: thisBrewery.website,
-				phone: thisBrewery.formatted_phone_number,
-				map: thisBrewery.url
-			}, (err, updatedBrewery) => {
-				res.render('./brewery/show.ejs', {
-					brewery: updatedBrewery,
-					address: thisBrewery.formatted_address,
+			request.get('https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&maxheight=400&photoreference=' + thisBrewery.photos[0].photo_reference + '&key=' + placesKey).end((err, response) => {
+				
+				// console.log(thisBrewery);
+				const breweryPicture = response;
+
+
+				Brewery.findOneAndUpdate(req.params.id, {
+					location: thisBrewery.formatted_address,
 					website: thisBrewery.website,
 					phone: thisBrewery.formatted_phone_number,
-					url: thisBrewery.url
+					map: thisBrewery.url
+				}, (err, updatedBrewery) => {
+						console.log(updatedBrewery);
+						res.render('./brewery/show.ejs', {
+						// these were not updating synchronously even w/ async/await, so I'm hardcoding in the API results. Will refactor --> looks like shit
+						brewery: updatedBrewery,
+
+						address: thisBrewery.formatted_address,
+
+						website: thisBrewery.website,
+
+						phone: thisBrewery.formatted_phone_number,
+
+						url: thisBrewery.url,
+						// I know these pictures are janky, we'll figure out a better way to do this
+						photo: breweryPicture.redirects[0]
+					})
 				})
 			})
 		})
