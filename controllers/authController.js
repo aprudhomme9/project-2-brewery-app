@@ -6,7 +6,10 @@ const bcrypt = require('bcrypt');
 //Register Render
 
 router.get('/register', async (req, res) => {
-  res.render('./auth/register.ejs')
+  res.render('auth/register.ejs', {
+  	username: req.session.username,
+  	loggedIn: req.session.loggedIn
+  })
 })
 
 
@@ -49,7 +52,7 @@ router.post('/register', async (req, res) => {
     req.session.username = req.body.username;
     req.session.loggedIn = true;
 
-    res.redirect('../breweries');
+    res.redirect('/breweries');
 
     console.log(req.session.loggedIn);
     console.log(user);
@@ -67,7 +70,7 @@ router.post('/login', async (req, res) => {
     if(foundUser) {
       if(bcrypt.compareSync(req.body.password, foundUser.password)) {
         req.session.loggedIn = true;
-        res.redirect('../breweries');
+        res.redirect('/breweries');
       } else {
         req.session.message = 'Username or Password Already Exists';
         res.redirect('/auth/register');
