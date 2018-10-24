@@ -129,8 +129,9 @@ router.delete('/:id', async (req, res) => {
     console.log(foundUser.username);
     console.log(foundUser.breweries);
     
-    const breweryToDelete = await foundUser.breweries.findIndex(brewery => brewery._id == req.params.id);
-    await foundUser.breweries.splice(breweryToDelete, 0);
+    const breweryIndex = await foundUser.breweries.findIndex(brewery => brewery._id == req.params.id);
+    await foundUser.breweries.splice(breweryIndex, 0);
+    console.log(foundUser.breweries);
     foundUser.save();
     res.redirect('/user');
 })
