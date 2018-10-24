@@ -10,24 +10,47 @@ const Brewery = require('../models/brewery');
 
 
 
-// check in brewery
-router.post('/', async (req, res) => {
+// check in brewery to the user
+router.post('/brewery', async (req, res) => {
 	// get user
 	const foundBrewery = await Brewery.findById(req.body._id);
-	console.log(foundBrewery);
 	const foundUser = await User.findOne({username: req.session.username});
-
 	await foundUser.breweries.push(foundBrewery);
-
 	await foundUser.save();
 	res.redirect('/user');
 
 })
+
+//add a beer to the user
+router.post('/newbeer/:breweryID', async (req, res, next) => {
+    try {
+        const foundUser = await User.findOne({username: req.session.username})
+        // console.log(foundUser + "found user FOUND -------------");
+        const foundBrewery = await Brewery.findById(req.params.breweryID);
+        // console.log(foundBrewery + "found brewery");
+        const makeBeer = await Beer.create(req.body);
+        // console.log(makeBeer + "make beer");
+        foundUser.breweries.push(makeBeer);
+        await foundUser.save();
+        // console.log(foundUser + "found user post route");
+        res.render('/user',{
+            username: req.session.username,
+            loggedIn: req.session.loggedIn,
+            breweries: foundUser.breweries,
+            beers: foundUser.beers
+
+        })
+    } catch(e){
+        // console.log('error posting: _____________');
+        next(e)
+    }
+        
+});
 //GET = SHOW
 router.get('/', async (req, res) => {
 	const foundUser = await User.findOne({username: req.session.username});
-	console.log(req.session.loggedIn);
-	console.log(req.session.username);
+	// console.log(req.session.loggedIn);
+	// console.log(req.session.username);
 	if(foundUser) {
 		res.render('./user/profile.ejs', {
 		user: foundUser,
@@ -58,6 +81,8 @@ BROKEN
 //         }
         
 // });
+
+
 
 //GET - EDIT
 router.get('/edit', async (req, res) => {

@@ -50,9 +50,10 @@ BROKEN
 router.get('/new/:breweryId', async (req, res, next) => {
     try {
         const findBrewery = await Brewery.findById(req.params.breweryId);
+        // console.log(findBrewery, "breweryID from params");
         const foundUser = await User.findOne({username: req.session.username});
-        console.log(foundUser);
-        res.render('beer/new.ejs',{
+        console.log("Test this current route");
+        res.render('/user/profile',{
             username: req.session.username,
             loggedIn: req.session.loggedIn,
             brewery: findBrewery,
@@ -92,30 +93,11 @@ router.get('/:id', async(req, res, next) => {
 /***************
 BROKEN
 ***************/
-router.post('/', async (req, res) => {
-    const foundUser = await User.findOne({username: req.session.username});
-    console.log(foundUser);
-})
-// router.post('/', async (req, res, next) => {
-//     try {
-//         const foundUser = await User.findOne({username: req.session.username})
-//         const foundBrewery = await Brewery.findById(req.params.id);
-//         const makeBeer = await Beer.create(req.body);
-//         foundUser.breweries.push(makeBeer);
-//         await foundUser.save();
-//         console.log(foundUser);
-//         res.render('/user/profile',{
-//             username: req.session.username,
-//             loggedIn: req.session.loggedIn,
-//             breweries: foundUser.breweries,
-//             beers: foundUser.beers
+// router.post('/', async (req, res) => {
+//     const foundUser = await User.findOne({username: req.session.username});
+//     console.log(foundUser);
+// })
 
-//         })
-//     } catch(e){
-//         next(e)
-//     }
-        
-// });
 
 
 //GET - EDIT

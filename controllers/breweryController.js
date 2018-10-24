@@ -51,11 +51,11 @@ router.get('/', (req, res) => {
 
 router.get('/user/:query', (req, res) => {
 	const userQuery = req.params.query;
-	console.log(userQuery);
+	// console.log(userQuery);
 	request.get('https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + userQuery + '+breweries' + '&key=' + placesKey).end((err, response) => {
 			const placesData = JSON.parse(response.text);
 
-			console.log(placesData);
+			// console.log(placesData);
 
 			const breweries = placesData.results;
 
@@ -124,14 +124,14 @@ router.get('/:id', async (req, res) => {
 })
 // So user can search for breweries
 router.delete('/:id', async (req, res) => {
-    console.log('hey');
+    // console.log('hey');
     const foundUser = await User.findOne({username: req.session.username});
-    console.log(foundUser.username);
-    console.log(foundUser.breweries);
+    // console.log(foundUser.username);
+    // console.log(foundUser.breweries);
     
     const breweryIndex = await foundUser.breweries.findIndex(brewery => brewery._id == req.params.id);
     await foundUser.breweries.splice(breweryIndex, 0);
-    console.log(foundUser.breweries);
+    // console.log(foundUser.breweries);
     foundUser.save();
     res.redirect('/user');
 })
