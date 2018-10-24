@@ -30,6 +30,8 @@ router.get('/', async (req, res) => {
 router.get('/new', async (req, res, next) => {
     try {
         const allBreweries = await Brewery.find({});
+        const foundUser = await User.findOne({username: req.session.username});
+        foundUser.save();
         res.render('beer/new.ejs',{
             username: req.session.username,
             loggedIn: req.session.loggedIn,
@@ -42,9 +44,14 @@ router.get('/new', async (req, res, next) => {
 });
 
 //GET - NEW beer from brewery page, pulls in req.params.id 
+/*************
+BROKEN
+*************/
 router.get('/new/:breweryId', async (req, res, next) => {
     try {
         const findBrewery = await Brewery.findById(req.params.breweryId);
+        const foundUser = await User.findOne({username: req.session.username});
+        console.log(foundUser);
         res.render('beer/new.ejs',{
             username: req.session.username,
             loggedIn: req.session.loggedIn,
@@ -82,28 +89,33 @@ router.get('/:id', async(req, res, next) => {
     
 
 //POST - CREATE
-router.post('/', async (req, res, next) => {
-    try {
-        const foundUser = await User.findOne({username: req.session.username});
-        console.log(req.session.username);
-        console.log(foundUser);
-        const findBrewery = await Brewery.findById(req.body.breweryId);
-        const makeBeer = await Beer.create(req.body);
-        foundUser.breweries.push(makeBeer);
-        await foundUser.save();
-        console.log(foundUser);
-        res.render('/user/profile',{
-            username: req.session.username,
-            loggedIn: req.session.loggedIn,
-            breweries: foundUser.breweries,
-            beers: foundUser.beers
+/***************
+BROKEN
+***************/
+router.post('/', async (req, res) => {
+    const foundUser = await User.findOne({username: req.session.username});
+    console.log(foundUser);
+})
+// router.post('/', async (req, res, next) => {
+//     try {
+//         const foundUser = await User.findOne({username: req.session.username})
+//         const foundBrewery = await Brewery.findById(req.params.id);
+//         const makeBeer = await Beer.create(req.body);
+//         foundUser.breweries.push(makeBeer);
+//         await foundUser.save();
+//         console.log(foundUser);
+//         res.render('/user/profile',{
+//             username: req.session.username,
+//             loggedIn: req.session.loggedIn,
+//             breweries: foundUser.breweries,
+//             beers: foundUser.beers
 
-        })
-    } catch(e){
-        next(e)
-    }
+//         })
+//     } catch(e){
+//         next(e)
+//     }
         
-});
+// });
 
 
 //GET - EDIT

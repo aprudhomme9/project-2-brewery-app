@@ -27,35 +27,37 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
 	const foundUser = await User.findOne({username: req.session.username});
 	console.log(req.session.loggedIn);
+	console.log(req.session.username);
 	if(foundUser) {
 		res.render('./user/profile.ejs', {
 		user: foundUser,
 		breweries: foundUser.breweries,
-		beers: foundUser.beers,
-		loggedIn: req.session.loggedIn,
-		username: req.session.username
+		beers: foundUser.beers
 	})
 	} else {
 		res.redirect('../breweries');
 	}
 })
 //Add in beer
-router.post('/', async (req, res, next) => {
-        try {
-        const foundUser = await User.findOne({username: req.session.username});
-        const foundBrewery = await Brewery.findById({'brewery._id': req.session.username});
-        const foundBeer = await Beer.find({});
-        //check for doubles eventually
-        //add beer to user beers, and beers
-        foundUser.beers.push(foundBeer);
-        foundUser.save();
-        res.redirect('/user');
-        } catch(e){
-            res.send(e, "error");
-            next(e)
-        }
+/************
+BROKEN
+************/
+// router.post('/', async (req, res, next) => {
+//         try {
+//         const foundUser = await User.findOne({username: req.session.username});
+//         const foundBrewery = await Brewery.findById({'brewery._id': req.session.username});
+//         const foundBeer = await Beer.find({});
+//         //check for doubles eventually
+//         //add beer to user beers, and beers
+//         foundUser.beers.push(foundBeer);
+//         foundUser.save();
+//         res.redirect('/user');
+//         } catch(e){
+//             res.send(e, "error");
+//             next(e)
+//         }
         
-});
+// });
 
 //GET - EDIT
 router.get('/edit', async (req, res) => {
