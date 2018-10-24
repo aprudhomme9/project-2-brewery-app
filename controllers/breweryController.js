@@ -9,14 +9,18 @@ const mapsKey = 'AIzaSyBzijVyQTE_Odm2-IXZsA3MbzSjk81zQgk';
 
 const Brewery = require('../models/brewery');
 
+const User = require('../models/user');
+
+const Beer = require('../models/beer');
+
 router.get('/', (req, res) => {
     request.post('https://www.googleapis.com/geolocation/v1/geolocate?key=' + mapsKey).end((err, response) => {
 
         const locationData = JSON.parse(response.text);
         const userLat = locationData.location.lat;
         const userLng = locationData.location.lng;
-
-         request.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLat + ',' + userLng + '&radius=43700&keyword=breweries&key=' + placesKey).end((err, response) => {
+        console.log(userLat, userLng);
+        request.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLat + ',' + userLng  + '&radius=43700&keyword=breweries&key=' + placesKey).end((err, response) => {
     
                 const placesData = JSON.parse(response.text);
 
@@ -45,6 +49,44 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/user/:query', (req, res) => {
+	const userQuery = req.params.query;
+	console.log(userQuery);
+	request.get('https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + userQuery + '+breweries' + '&key=' + placesKey).end((err, response) => {
+			const placesData = JSON.parse(response.text);
+
+			console.log(placesData);
+
+			const breweries = placesData.results;
+
+			const mappedBreweries = breweries.map((brewery) => {
+				const newObj = {
+                    name: brewery.name,
+                    price: brewery.price_level,
+                    rating: brewery.rating,
+                    placeid: brewery.place_id
+                    }
+                    return newObj;
+                })
+
+            Brewery.create(mappedBreweries, (err, createdBreweries) => {
+
+                if(err) {
+                    res.redirect('/breweries');
+                } else {
+                    res.render('./brewery/results.ejs', {
+                    loggedIn: req.session.loggedIn,
+                    username: req.session.username,
+                    breweries: createdBreweries,
+                    query: userQuery
+
+                    })
+                }
+
+	        })
+	})
+})
+
 router.get('/:id', async (req, res) => {
     try {
         const foundBrewery = await Brewery.findById(req.params.id);
@@ -61,16 +103,17 @@ router.get('/:id', async (req, res) => {
                 phone: thisBrewery.formatted_phone_number,
                 map: thisBrewery.url,
                 rating: thisBrewery.rating,
-                // photo: breweryPicture.redirects[0],
                 price: thisBrewery.price_level,
                 hours: thisBrewery.opening_hours.weekday_text
             },     {new: true})
 
+            const breweryBeers = await Beer.find({brewery: updatedBrewery});
        		await updatedBrewery.save();
         	res.render('brewery/show.ejs', {
             	loggedIn: req.session.loggedIn,
             	username: req.session.username,
-            	brewery: updatedBrewery
+            	brewery: updatedBrewery,
+                beers: breweryBeers
             })
 
         });
@@ -78,6 +121,18 @@ router.get('/:id', async (req, res) => {
     } catch (err) {
         res.send(err)
     }
+})
+// So user can search for breweries
+router.delete('/:id', async (req, res) => {
+    console.log('hey');
+    const foundUser = await User.findOne({username: req.session.username});
+    console.log(foundUser.username);
+    console.log(foundUser.breweries);
+    
+    const breweryToDelete = await foundUser.breweries.findIndex(brewery => brewery._id == req.params.id);
+    await foundUser.breweries.splice(breweryToDelete, 0);
+    foundUser.save();
+    res.redirect('/user');
 })
 
 

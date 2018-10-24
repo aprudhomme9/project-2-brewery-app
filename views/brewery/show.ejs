@@ -2,46 +2,67 @@
 	<div class="container">
 		
 <div class="container">
-        
-            <h1><%=brewery.name%></h1>
+	<h1><%=brewery.name%></h1>
+		<div class = 'list-item-info'>
+			<h5>Consensus Rating: <%=brewery.rating%>/5 stars</h5>
 
-			<div class = 'list-item-info'>
-				<h5>Consensus Rating: <%=brewery.rating%>/5 stars</h5>
-				<h5>Price Level: <% if (brewery.price = 1) { -%>
- 								<p>$</p>
- 							<% } else if(brewery.price = 2) { -%>
- 								<p>$$</p>
- 							<% } else if (brewery.price = 3) {-%>
- 								<p>$$$</p>
- 							<%} else if (brewery.price = 4) { -%>
- 								<p>$$$$</p>
- 							<%}%></h5>
-				<h5>Address: <a href="<%=brewery.map%>"><%=brewery.location%></a></h5>
-				<h5>Phone: <%=brewery.phone%></h5>
-			</div>
+			<h5>Price Level: <% if (brewery.price = 1) { -%>
+ 						<p>$</p>
+ 					<% } else if(brewery.price = 2) { -%>
+ 						<p>$$</p>
+ 					<% } else if (brewery.price = 3) {-%>
+ 						<p>$$$</p>
+ 					<%} else if (brewery.price = 4) { -%>
+ 						<p>$$$$</p>
+ 					<%}%></h5>
+			<h5>Address: <a href="<%=brewery.map%>"><%=brewery.location%></a></h5>
 
-			<div>
-				<h3>Hours: </h3>
-				<%if (brewery.hours) {%>
+			<h5>Phone: <%=brewery.phone%></h5>
+		</div>
+
+		<div>
+			<h3>Hours: </h3>
+
+			<%if (brewery.hours) {%>
 				<%brewery.hours.forEach((hour) => {%>
-				<div class="list-item-info">
-					<li><%=hour%></li>
-				</div>
-				<%})}%>
-			</div>
-			<form action="/user" method="post">
-				<ul class="nav nav-pills nav-fill">
- 					 <li class="nav-item">
- 					 	<input type="hidden" name="_id" value="<%=brewery.id%>">
-    					<button class="nav-link active" type="submit">Check In</button>
-  					</li>
-  				</ul>
-			</form>
+					<div class="list-item-info">
+						<li><%=hour%></li>
+					</div>
+			<%})}%>
+		</div>
+
+		<form action="/user" method="post">
+			<ul class="nav nav-pills nav-fill">
+ 				<li class="nav-item">
+ 					<input type="hidden" name="_id" value="<%=brewery.id%>">
+
+    				<button class="nav-link active" type="submit">Check In</button>
+  					
+  				</li>
+  			</ul>
+		</form>
 
     <br>
         <div class="row">
             <a href="<%=brewery.website%>"><%=brewery.name%> Website</a>
         </div>
+
+        <div class="row"> 
+            <form action="/beer/new/<%=brewery.id%>" method="GET">
+                <input type="hidden" name="beer">
+                <button type="submit" value="Add Beer">Add Beer</button>
+            </form>
+        </div>
+
+        <%beers.forEach((el, i) => {%>
+            <%if(i % 3 == 0 && i != 0){%>
+                 <div class="row">
+                        <%}%>
+                    <div class="col-md-3">
+                        <a href="/beer/<%=beers[i].id%>"><%=el.name%></a>
+                    </div>
+                </div>
+            <%});%>
     </div>
 </body>
 </html>
