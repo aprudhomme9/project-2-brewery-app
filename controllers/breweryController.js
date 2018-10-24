@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
         const userLat = locationData.location.lat;
         const userLng = locationData.location.lng;
 
-         request.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLat + ',' + userLng + '&radius=43700&keyword=brewery&key=' + placesKey).end((err, response) => {
+         request.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLat + ',' + userLng + '&radius=43700&keyword=breweries&key=' + placesKey).end((err, response) => {
     
                 const placesData = JSON.parse(response.text);
 

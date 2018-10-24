@@ -9,8 +9,19 @@
 							<a href="/breweries/<%=brewery.id%>"><%=brewery.name%></a>
 						</div>
  						<br>
- 						<div class="list-group-item-info">
+ 						<div class="list-group-item-light">
  							<p><%=brewery.rating%>/5 stars</p>
+ 						</div>
+ 						<div class="list-group-item-light">
+ 							<% if (brewery.price = 1) { -%>
+ 								<p>$</p>
+ 							<% } else if(brewery.price = 2) { -%>
+ 								<p>$$</p>
+ 							<% } else if (brewery.price = 3) {-%>
+ 								<p>$$$</p>
+ 							<%} else if (brewery.price = 4) { -%>
+ 								<p>$$$$</p>
+ 							<%}%>
  						</div>
  						<br>
 					</div>

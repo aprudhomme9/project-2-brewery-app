@@ -19,7 +19,8 @@
 	<div class='col-lg-6'>
 		<h3><%=user.username%>'s Breweries: </h3>
     			<%breweries.forEach((brewery) => {%>
-    				<li><%=brewery.name%></li>
+    				<a href='/breweries/<%=brewery.id%>'><%=brewery.name%></a>
+    				<br>
     			<%})%>
 
 		<h3><%=user.username%>'s Beers: </h3>

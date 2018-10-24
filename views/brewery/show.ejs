@@ -7,7 +7,15 @@
 
 			<div class = 'list-item-info'>
 				<h5>Consensus Rating: <%=brewery.rating%>/5 stars</h5>
-				<h5>Price Level: <%=brewery.price%></h5>
+				<h5>Price Level: <% if (brewery.price = 1) { -%>
+ 								<p>$</p>
+ 							<% } else if(brewery.price = 2) { -%>
+ 								<p>$$</p>
+ 							<% } else if (brewery.price = 3) {-%>
+ 								<p>$$$</p>
+ 							<%} else if (brewery.price = 4) { -%>
+ 								<p>$$$$</p>
+ 							<%}%></h5>
 				<h5>Address: <a href="<%=brewery.map%>"><%=brewery.location%></a></h5>
 				<h5>Phone: <%=brewery.phone%></h5>
 			</div>
@@ -22,8 +30,12 @@
 				<%})}%>
 			</div>
 			<form action="/user" method="post">
-				<input type="hidden" name="_id" value="<%=brewery.id%>">
-				<button type="submit" value="Check In">Check In</button>
+				<ul class="nav nav-pills nav-fill">
+ 					 <li class="nav-item">
+ 					 	<input type="hidden" name="_id" value="<%=brewery.id%>">
+    					<button class="nav-link active" type="submit">Check In</button>
+  					</li>
+  				</ul>
 			</form>
 
     <br>
