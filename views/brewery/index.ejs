@@ -1,33 +1,17 @@
   <% include ../partials/header.ejs %>
 	<div class="container">
 		<h1>Breweries Near You</h1>
-			<ul>
-				<div class="row">
-				<%breweries.forEach((brewery, i) => {%>
-					<div class='col-md-4'>
-						<div class='list-group'>
-							<a href="/breweries/<%=brewery.id%>"><%=brewery.name%></a>
-						</div>
- 						<br>
- 						<div class="list-group-item-light">
- 							<p><%=brewery.rating%>/5 stars</p>
- 						</div>
- 						<div class="list-group-item-light">
- 							<% if (brewery.price = 1) { -%>
- 								<p>$</p>
- 							<% } else if(brewery.price = 2) { -%>
- 								<p>$$</p>
- 							<% } else if (brewery.price = 3) {-%>
- 								<p>$$$</p>
- 							<%} else if (brewery.price = 4) { -%>
- 								<p>$$$$</p>
- 							<%}%>
- 						</div>
- 						<br>
-					</div>
- 				<%})%>
- 				</div>
-			</ul>
+  			<%breweries.forEach((brewery) => {%>
+  			<div class='container'>
+  				<div class="card" class='col-md-6'>
+  					<div class="card-body">
+  						<h4 class="card-title"><%=brewery.name%></h4>
+  						<p class="card-text text-primary"><%=brewery.rating%>/5</p>
+ 						<a href="/breweries/<%=brewery.id%>" class="btn btn-primary">Details</a>
+  					</div>
+  				</div>
+  			</div>
+  			<%})%>
 	</div>
 </body>
 </html>
