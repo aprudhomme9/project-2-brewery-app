@@ -46,7 +46,6 @@ GET ROUTE TO USER PROFILE PAGE
 router.get('/', async (req, res) => {
 	try {
 		const foundUser = await User.findOne({username: req.session.username});
-		console.log(foundUser, 'USSSSEERRRR');
 		if(foundUser) {
 			res.render('./user/profile.ejs', {
 			user: foundUser,

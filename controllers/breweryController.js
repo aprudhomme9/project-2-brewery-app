@@ -61,8 +61,6 @@ router.get('/user/:query', (req, res) => {
 	request.get('https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + userQuery + '+breweries' + '&key=' + placesKey).end((err, response) => {
 			const placesData = JSON.parse(response.text);
 
-			console.log(placesData);
-
 			const breweries = placesData.results;
 
 			const mappedBreweries = breweries.map((brewery) => {
@@ -181,8 +179,10 @@ router.post('/:id', async (req, res) => {
             
             const foundUser = await User.findOne({username: req.session.username});
             const createdBeer = await Beer.create(req.body);
+            const breweryOfBeer = await Brewery.findById(req.params.id);
+            createdBeer.brewery = breweryOfBeer
             createdBeer.save();
-
+            console.log(createdBeer.brewery);
             await foundUser.beers.push(createdBeer);
             
             await foundUser.save();
