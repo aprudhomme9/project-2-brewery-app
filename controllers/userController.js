@@ -12,8 +12,8 @@ const Brewery = require('../models/brewery');
 
 // Brewery Check in
 /***************************
-POST ROUTE THAT ALLOWS USER TO ADD BREWERY TO THEIR PROFILE
-BREWERY IS PUSHED INTO USER'S BREWERIES ARRAY AND SAVED
+POST ROUTE THAT ALLOWS USER TO ADD BREWERY TO THEIR PROFILE,
+BREWERY IS PUSHED INTO USER'S BREWERIES ARRAY AND SAVED,
 REDIRECT TO USER PROFILE
 ****************************/
 router.post('/', async (req, res) => {
@@ -21,9 +21,7 @@ router.post('/', async (req, res) => {
 		if (req.session.loggedIn) {
 			const foundBrewery = await Brewery.findById(req.body._id);
 			const foundUser = await User.findOne({username: req.session.username});
-			console.log(req.session.loggedIn);
 			foundUser.breweries.push(foundBrewery);
-			console.log(req.session.loggedIn);
 			await foundUser.save();
 		
 			res.redirect('/user');
@@ -48,9 +46,7 @@ GET ROUTE TO USER PROFILE PAGE
 router.get('/', async (req, res) => {
 	try {
 		const foundUser = await User.findOne({username: req.session.username});
-		console.log(req.session.loggedIn);
-		console.log(req.session.username);
-		console.log(foundUser);
+		console.log(foundUser, 'USSSSEERRRR');
 		if(foundUser) {
 			res.render('./user/profile.ejs', {
 			user: foundUser,
@@ -60,7 +56,7 @@ router.get('/', async (req, res) => {
 			username: foundUser.username
 	})
 	} else {
-		res.redirect('../breweries');
+		res.redirect('/');
 	}
 	} catch (err) {
 		res.send(err)

@@ -1,9 +1,8 @@
   <% include ../partials/header.ejs %>
     <div class="container">
         <header>
-            <h1>Beer Index</h1>
+            <h1>All of the beer</h1>
                 <br>
-                <a href="/">Home</a>
                 <div class="row"> 
                 <%beer.forEach((el, i) => {%>
                     <%if(i % 3 == 0 && i != 0){%>

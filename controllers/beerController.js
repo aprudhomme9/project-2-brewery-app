@@ -39,7 +39,6 @@ GET ROUTE TO BEER SHOW PAGE
 router.get('/:id', async(req, res, next) => {
     try {
         const foundBeer = await Beer.findById(req.params.id);
-        console.log(foundBeer, "found beer");
         res.render('beer/show.ejs', {
             username: req.session.username,
             loggedIn: req.session.loggedIn,
@@ -81,9 +80,44 @@ router.post('/:id', async (req, res) => {
 
 
 //GET --> EDIT
-
+/*************
+Get route to edit beer page
+*************/
+router.get('/:id/edit', async (req, res) => {
+    try {
+        const foundBeer = await Beer.findById(req.params.id);
+        res.render('beer/edit.ejs', {
+            beer: foundBeer,
+            loggedIn: req.session.loggedIn,
+            username: req.session.username
+        })
+    } catch (err) {
+        res.send(err)
+    }
+})
 //PUT --> UPDATE
+/****************
+Put route to update beer after user edits beer
+****************/
+router.put('/:id', async (req, res) => {
+    try {
+        const updatedBeer = await Beer.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        await updatedBeer.save();
+        console.log(updatedBeer, '<-----UPDATED BEER');
+        const foundUser = await User.findOne({username: req.session.username});
+        const beerIndex = await foundUser.beers.findIndex(beer => beer._id == req.params.id);
+        foundUser.beers.splice(beerIndex, 1);
+        console.log(beerIndex, '<----Beer Index');
+        await foundUser.beers.push(updatedBeer);
+        
+        await foundUser.save();
+        console.log(foundUser.beers, 'USER BEERS ');
 
+        res.redirect('/beer');
+    } catch (err) {
+        res.send(err)
+    }
+})
 //DELETE --> DESTROY
 /******************
 DELETE ROUTE THAT REMOVES BEER FROM USER PROFILE

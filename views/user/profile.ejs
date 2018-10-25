@@ -10,12 +10,13 @@
   					<div class="card" class='col-md-6'>
   						<div class="card-body">
   							<h4 class="card-title"><%=brewery.name%></h4>
-  							<p class="card-text text-primary"><%=brewery.rating%>/5</p>
- 							<a href="/breweries/<%=brewery.id%>" class="btn btn-primary">Details</a>
- 							<form action='breweries/<%=brewery.id%>?_method=DELETE' method='POST'>
+  							<p class="card-text text-primary"><%=brewery.rating%>/5 Stars</p>
+                <p class="card-text text-primary"><%=brewery.location%></p>
+ 							  <a href="/breweries/<%=brewery.id%>" class="btn btn-primary">Details</a>
+ 							  <form action='breweries/<%=brewery.id%>?_method=DELETE' method='POST'>
 
- 								<button class="btn btn-sm" type="submit">Remove</button>
- 							</form>
+ 								 <button class="btn btn-sm" type="submit">Remove</button>
+ 							  </form>
   						</div>
   					</div>
   				</div>
@@ -25,9 +26,10 @@
 		<h4>Beers <%=user.username%> has tried: </h4>
             <%beers.forEach((beer) => {%>
             <div class='container'>
-                <div class='col-md-6 card'>
+                <div class='col-md-12 card'>
                     <div class="card-body">
-                        <h4><%=beer.name%></h4>
+                        <h4 class="card-title"><%=beer.name%></h4>
+                        <p class="card-text text-primary"><%=beer.style%></p>
                         <a href="beer/<%=beer.id%>" class="btn btn-primary">Details</a>
                         <form action='/beer/<%=beer.id%>?_method=DELETE' method='POST'>
 
@@ -35,7 +37,7 @@
 
                         </form>
 
-                        
+
                     </div>
                 </div>
             </div>

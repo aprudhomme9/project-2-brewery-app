@@ -1,0 +1,18 @@
+<% include ../partials/header.ejs %>
+<div class="container"></div>
+    <h2>Edit <%=beer.name%></h2>
+    <form action="/beer/<%=beer.id%>?_method=PUT" method="POST">
+      		<input type="text" name="name" placeholder="name of beer"><br/>
+      		<input type="text" name="style" placeholder="style">
+            <input type="text" name="abv" placeholder="abv">
+            <input type="text" name="ibu" placeholder="ibu"> <br/>
+            <input type="text" name="hops" placeholder="hops">
+            <input type="text" name="yeast" placeholder="yeast">
+            <input type="text" name="additives" placeholder="additives"><br/>
+            <input type="text" name="barrel" placeholder="barrel">
+            <input type="text" name="picture" placeholder="url">
+            <input type="submit" value="Submit New Beer">
+    </form>
+</div>
+</body>
+</html>
