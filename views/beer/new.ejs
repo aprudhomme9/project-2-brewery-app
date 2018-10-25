@@ -16,6 +16,7 @@
             <%}%>
             <label>Beer Name</label>
          <form method="POST" action="/breweries/<%=brewery.id%>">
+            <input type="text" name="brewery.name" value="<%=brewery.name%>"><br/>
             <input type="text" name="name" placeholder="name of beer"><br/>
             <input type="text" name="style" placeholder="style">
             <input type="text" name="abv" placeholder="abv">
