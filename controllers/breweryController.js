@@ -58,7 +58,6 @@ RESULTS DISPLAYED ARE BASED ON CITY SEARCH PERFORMED BY USER
 **************/
 router.get('/user/:query', (req, res) => {
 	const userQuery = req.params.query;
-	console.log(userQuery);
 	request.get('https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + userQuery + '+breweries' + '&key=' + placesKey).end((err, response) => {
 			const placesData = JSON.parse(response.text);
 
@@ -138,15 +137,10 @@ DELETE ROUTE WHICH REMOVES BREWERY FROM USER PROFILE
 ************************/
 router.delete('/:id', async (req, res) => {
     try {
-        console.log('hey');
         const foundUser = await User.findOne({username: req.session.username});
-        console.log(foundUser.username);
-        console.log(foundUser.breweries);
     
         const breweryIndex = await foundUser.breweries.findIndex(brewery => brewery._id == req.params.id);
         foundUser.breweries.splice(breweryIndex, 1);
-        console.log(breweryIndex);
-        console.log(foundUser.breweries);
         foundUser.save();
         res.redirect('/user');
     } catch (err) {
@@ -157,6 +151,9 @@ router.delete('/:id', async (req, res) => {
 /**********************
 GET ROUTE TO NEW BEER PAGE DIRECTLY FROM BREWERY SHOW PAGE
 USER CAN ADD BEER WHILE IN A CERTAIN BREWERY
+
+Currently does not add to the brewery because beers is not a part of the brewery model
+This is more for user convenience right now
 **********************/
 router.get('/:id/newbeer', async (req, res) => {
     try {
@@ -180,16 +177,24 @@ POST ROUTE WHICH CREATES BEER AFTER USER ADDS IT FROM BREWERY SHOW PAGE
 *************************/
 router.post('/:id', async (req, res) => {
     try {
-        console.log(req.session.username);
+        if(req.session.loggedIn) {
+            
+            const foundUser = await User.findOne({username: req.session.username});
+            const createdBeer = await Beer.create(req.body);
+            createdBeer.save();
 
-        const foundUser = await User.findOne({username: req.session.username});
-        const createdBeer = await Beer.create(req.body);
-        createdBeer.save();
-        await foundUser.beers.push(createdBeer);
-        console.log(foundUser.beers);
-        await foundUser.save();
-
-        res.redirect('/user');
+            await foundUser.beers.push(createdBeer);
+            
+            await foundUser.save();
+        
+            res.redirect('/user');
+        } else {
+            req.session.message = 'You must be logged in to add a beer';
+            res.redirect('/breweries');
+        }
+        
+        
+        
     } catch (err) {
         res.send(err)
     }

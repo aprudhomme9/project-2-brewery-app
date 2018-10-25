@@ -10,22 +10,30 @@ const Brewery = require('../models/brewery');
 
 
 
-// check in brewery
-/*****************
+// Brewery Check in
+/***************************
 POST ROUTE THAT ALLOWS USER TO ADD BREWERY TO THEIR PROFILE
 BREWERY IS PUSHED INTO USER'S BREWERIES ARRAY AND SAVED
 REDIRECT TO USER PROFILE
-*****************/
+****************************/
 router.post('/', async (req, res) => {
 	try {
-		const foundBrewery = await Brewery.findById(req.body._id);
-		const foundUser = await User.findOne({username: req.session.username});
-		console.log(foundUser);
-		console.log(foundBrewery);
-		foundUser.breweries.push(foundBrewery);
-
-		await foundUser.save();
-		res.redirect('/user');
+		if (req.session.loggedIn) {
+			const foundBrewery = await Brewery.findById(req.body._id);
+			const foundUser = await User.findOne({username: req.session.username});
+			console.log(req.session.loggedIn);
+			foundUser.breweries.push(foundBrewery);
+			console.log(req.session.loggedIn);
+			await foundUser.save();
+		
+			res.redirect('/user');
+		} else {
+			res.redirect('/breweries');
+		}
+		
+		
+		
+		
 	} catch (err) {
 		res.send(err)
 	}
@@ -33,10 +41,10 @@ router.post('/', async (req, res) => {
 	
 
 })
-//GET = SHOW
+//GET --> SHOW
 /****************
 GET ROUTE TO USER PROFILE PAGE
-****************/
+*****************/
 router.get('/', async (req, res) => {
 	try {
 		const foundUser = await User.findOne({username: req.session.username});
@@ -60,7 +68,10 @@ router.get('/', async (req, res) => {
 	
 })
 
-//GET - EDIT
+//GET --> EDIT
+/****************
+GET ROUTE TO EDIT PAGE FOR USER PROFILE
+****************/
 // router.get('/edit', async (req, res) => {
 // 	const foundUser = await User.findOne({username: req.session.username});
 // 	if(foundUser) {

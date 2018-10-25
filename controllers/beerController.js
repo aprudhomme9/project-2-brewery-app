@@ -10,7 +10,10 @@ const User = require('../models/user');
 
 
 
-//GET - INDEX
+//GET --> INDEX
+/**************
+GET ROUTE TO BEER INDEX PAGE DISPLAYING ALL BEERS IN
+**************/
 router.get('/', async (req, res) => {
     try {
         const foundBeers = await Beer.find({});
@@ -29,7 +32,7 @@ router.get('/', async (req, res) => {
 //GET - NEW - New beer AND brewery pick, for when a user makes a beer NOT from the brewery page. It allows them to pick the beer in a drop down vs. the req.params.id of the brewery coming in. 
 
 
-// GET - SHOW
+// GET --> SHOW
 /**************
 GET ROUTE TO BEER SHOW PAGE
 ***************/
@@ -52,19 +55,24 @@ router.get('/:id', async(req, res, next) => {
 
     
 
-//POST - CREATE
+//POST --> CREATE
 /***************
 POST ROUTE WHEN CHECKING IN A BEER DIRECTLY FROM BEER SHOW PAGE
 ***************/
 router.post('/:id', async (req, res) => {
     try {
-        const foundUser = await User.findOne({username: req.session.username});
-        const foundBeer = await Beer.findById(req.params.id);
-        foundUser.beers.push(foundBeer);
+        if (req.session.loggedIn) {
+            const foundUser = await User.findOne({username: req.session.username});
+            const foundBeer = await Beer.findById(req.params.id);
+            foundUser.beers.push(foundBeer);
 
-        await foundUser.save()
+            await foundUser.save()
 
-        res.redirect('/user');
+            res.redirect('/user');
+        } else {
+            req.session.message = 'You must be logged in to check in a beer'
+            res.redirect('/breweries')
+        }
     } catch (err) {
         res.send(err)
     }
@@ -72,11 +80,11 @@ router.post('/:id', async (req, res) => {
 
 
 
-//GET - EDIT
+//GET --> EDIT
 
-//PUT - UPDATE
+//PUT --> UPDATE
 
-//DELETE - DESTROY
+//DELETE --> DESTROY
 /******************
 DELETE ROUTE THAT REMOVES BEER FROM USER PROFILE
 ******************/
