@@ -13,6 +13,10 @@ const User = require('../models/user');
 
 const Beer = require('../models/beer');
 
+/**************
+GET ROUTE TO BREWERY INDEX PAGE
+RESULTS THAT ARE DISPLAYED ARE BY LOCATION OF USER
+**************/
 router.get('/', (req, res) => {
     request.post('https://www.googleapis.com/geolocation/v1/geolocate?key=' + mapsKey).end((err, response) => {
 
@@ -48,7 +52,10 @@ router.get('/', (req, res) => {
         })
     })
 })
-
+/**************
+GET ROUTE TO BREWERY INDEX PAGE VIA SEARCH
+RESULTS DISPLAYED ARE BASED ON CITY SEARCH PERFORMED BY USER
+**************/
 router.get('/user/:query', (req, res) => {
 	const userQuery = req.params.query;
 	console.log(userQuery);
@@ -86,7 +93,11 @@ router.get('/user/:query', (req, res) => {
 	        })
 	})
 })
-
+/****************
+GET ROUTE TO BREWERY SHOW PAGE
+BREWERIES UPDATE WITH MORE DETAILED INFO FROM 
+GOOGLE PLACE DETAILS API CALL
+****************/
 router.get('/:id', async (req, res) => {
     try {
         const foundBrewery = await Brewery.findById(req.params.id);
@@ -122,7 +133,9 @@ router.get('/:id', async (req, res) => {
         res.send(err)
     }
 })
-// So user can search for breweries
+/************************
+DELETE ROUTE WHICH REMOVES BREWERY FROM USER PROFILE
+************************/
 router.delete('/:id', async (req, res) => {
     try {
         console.log('hey');
@@ -141,7 +154,10 @@ router.delete('/:id', async (req, res) => {
     }
     
 })
-
+/**********************
+GET ROUTE TO NEW BEER PAGE DIRECTLY FROM BREWERY SHOW PAGE
+USER CAN ADD BEER WHILE IN A CERTAIN BREWERY
+**********************/
 router.get('/:id/newbeer', async (req, res) => {
     try {
         const foundBrewery = await Brewery.findById(req.params.id);
@@ -159,7 +175,9 @@ router.get('/:id/newbeer', async (req, res) => {
     }
     
 })
-
+/*************************
+POST ROUTE WHICH CREATES BEER AFTER USER ADDS IT FROM BREWERY SHOW PAGE
+*************************/
 router.post('/:id', async (req, res) => {
     try {
         console.log(req.session.username);

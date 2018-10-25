@@ -11,13 +11,18 @@ const Brewery = require('../models/brewery');
 
 
 // check in brewery
+/*****************
+POST ROUTE THAT ALLOWS USER TO ADD BREWERY TO THEIR PROFILE
+BREWERY IS PUSHED INTO USER'S BREWERIES ARRAY AND SAVED
+REDIRECT TO USER PROFILE
+*****************/
 router.post('/', async (req, res) => {
 	try {
 		const foundBrewery = await Brewery.findById(req.body._id);
-		console.log(foundBrewery);
 		const foundUser = await User.findOne({username: req.session.username});
-
-		await foundUser.breweries.push(foundBrewery);
+		console.log(foundUser);
+		console.log(foundBrewery);
+		foundUser.breweries.push(foundBrewery);
 
 		await foundUser.save();
 		res.redirect('/user');
@@ -29,11 +34,15 @@ router.post('/', async (req, res) => {
 
 })
 //GET = SHOW
+/****************
+GET ROUTE TO USER PROFILE PAGE
+****************/
 router.get('/', async (req, res) => {
 	try {
 		const foundUser = await User.findOne({username: req.session.username});
 		console.log(req.session.loggedIn);
 		console.log(req.session.username);
+		console.log(foundUser);
 		if(foundUser) {
 			res.render('./user/profile.ejs', {
 			user: foundUser,
@@ -41,7 +50,7 @@ router.get('/', async (req, res) => {
 			beers: foundUser.beers,
 			loggedIn: req.session.loggedIn,
 			username: foundUser.username
-		})
+	})
 	} else {
 		res.redirect('../breweries');
 	}
@@ -50,11 +59,6 @@ router.get('/', async (req, res) => {
 	}
 	
 })
-//Add in beer
-/************
-BROKEN
-************/
-
 
 //GET - EDIT
 // router.get('/edit', async (req, res) => {

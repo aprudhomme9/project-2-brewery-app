@@ -29,16 +29,10 @@ router.get('/', async (req, res) => {
 //GET - NEW - New beer AND brewery pick, for when a user makes a beer NOT from the brewery page. It allows them to pick the beer in a drop down vs. the req.params.id of the brewery coming in. 
 
 
-//GET - NEW beer from brewery page, pulls in req.params.id 
-/*************
-BROKEN
-*************/
-
-
-// /new/:breweryId
-
-
-//GET - SHOW beer. Beers have breweries, so this can be used to pull in info for brewery and likely should offer at least a link to the brewery page. 
+// GET - SHOW
+/**************
+GET ROUTE TO BEER SHOW PAGE
+***************/
 router.get('/:id', async(req, res, next) => {
     try {
         const foundBeer = await Beer.findById(req.params.id);
@@ -60,7 +54,7 @@ router.get('/:id', async(req, res, next) => {
 
 //POST - CREATE
 /***************
-BROKEN
+POST ROUTE WHEN CHECKING IN A BEER DIRECTLY FROM BEER SHOW PAGE
 ***************/
 router.post('/:id', async (req, res) => {
     try {
@@ -75,26 +69,7 @@ router.post('/:id', async (req, res) => {
         res.send(err)
     }
 })
-// router.post('/', async (req, res, next) => {
-//     try {
-//         const foundUser = await User.findOne({username: req.session.username})
-//         const foundBrewery = await Brewery.findById(req.params.id);
-//         const makeBeer = await Beer.create(req.body);
-//         foundUser.breweries.push(makeBeer);
-//         await foundUser.save();
-//         console.log(foundUser);
-//         res.render('/user/profile',{
-//             username: req.session.username,
-//             loggedIn: req.session.loggedIn,
-//             breweries: foundUser.breweries,
-//             beers: foundUser.beers
 
-//         })
-//     } catch(e){
-//         next(e)
-//     }
-        
-// });
 
 
 //GET - EDIT
@@ -102,7 +77,26 @@ router.post('/:id', async (req, res) => {
 //PUT - UPDATE
 
 //DELETE - DESTROY
-
+/******************
+DELETE ROUTE THAT REMOVES BEER FROM USER PROFILE
+******************/
+router.delete('/:id', async (req, res) => {
+    try {
+        console.log('hey');
+        const foundUser = await User.findOne({username: req.session.username});
+        console.log(foundUser.username);
+        console.log(foundUser.beers);
+    
+        const beerIndex = await foundUser.beers.findIndex(beer => beer._id == req.params.id);
+        foundUser.beers.splice(beerIndex, 1);
+        
+        foundUser.save();
+        res.redirect('/user');
+    } catch (err) {
+        res.send(err)
+    }
+    
+})
 
 module.exports = router;
 

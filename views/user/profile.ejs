@@ -1,17 +1,4 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-</head>
-<body>
-	<nav>
-		<a class="col-md-1" href="/breweries">Breweries</a>
-		| <a class="col-md-1" href="/beer">Beer</a>
-
-	</nav>
-
+ <% include ../partials/header.ejs %>
 <div class='container'>
 	<h1><%=user.username%>'s Brewr Profile</h1>
 	
@@ -42,6 +29,11 @@
                     <div class="card-body">
                         <h4><%=beer.name%></h4>
                         <a href="beer/<%=beer.id%>" class="btn btn-primary">Details</a>
+                        <form action='/beer/<%=beer.id%>?_method=DELETE' method='POST'>
+
+                            <button class="btn btn-sm" type="submit">Remove</button>
+
+                        </form>
                     </div>
                 </div>
             </div>
