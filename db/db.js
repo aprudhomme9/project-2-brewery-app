@@ -7,7 +7,7 @@ const mongoDbUrl = process.env.MONGODB_URI || 'mongodb://localhost/beers';
 mongoose.connect(mongoDbUrl, { useNewUrlParser: true });
 
 mongoose.connection.on('connected', () => {
-  console.log('Mongoose connected at ', connectionString);
+  console.log('Mongoose connected');
 });
 
 mongoose.connection.on('disconnected', () => {
