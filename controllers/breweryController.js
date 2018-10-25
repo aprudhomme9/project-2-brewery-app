@@ -56,8 +56,10 @@ router.get('/', (req, res) => {
 GET ROUTE TO BREWERY INDEX PAGE VIA SEARCH
 RESULTS DISPLAYED ARE BASED ON CITY SEARCH PERFORMED BY USER
 **************/
-router.get('/user/:query', (req, res) => {
-	const userQuery = req.params.query;
+router.post('/user/search', (req, res) => {
+	let userQuery = req.body.query;
+    console.log(req.body.query);
+    
 	request.get('https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + userQuery + '+breweries' + '&key=' + placesKey).end((err, response) => {
 			const placesData = JSON.parse(response.text);
 
@@ -81,8 +83,7 @@ router.get('/user/:query', (req, res) => {
                     res.render('./brewery/results.ejs', {
                     loggedIn: req.session.loggedIn,
                     username: req.session.username,
-                    breweries: createdBreweries,
-                    query: userQuery
+                    breweries: createdBreweries
 
                     })
                 }

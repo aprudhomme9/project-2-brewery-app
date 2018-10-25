@@ -1,4 +1,68 @@
-<% include ../partials/header.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Pacifico|Roboto" rel="stylesheet">
+  <title></title>
+</head>
+<body>
+<header>
+  <nav class="shadow navbar navbar-expand-md navbar-light">
+   <a class="navbar-brand" href="/">Brewr</a>
+   <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+         <a class="nav-link" href="/breweries">Breweries</a>
+      </li>
+      <li class="nav-item active">
+         <a class="nav-link" href="/beer">Beer</a>
+      </li>
+      <li class="nav-item active">
+         <a class="nav-link" href="/user">Profile</a>
+      </li>
+   
+<%if(!loggedIn){%>
+   </ul>
+    <form class="form-inline" action="/auth/login" method="POST">
+      <div class="input-group input-group-sm">
+     <div class="input-group-prepend">
+      <div class="input-group-text">Username</div>
+    </div>
+ </div>
+
+     <input class="form-control form-control-sm" type="text" name="username" placeholder="username">
+     <div class="input-group input-group-sm">
+     <div class="input-group-prepend">
+      <div class="input-group-text">Password</div>
+    </div>
+ </div>
+
+      <input class="form-control form-control-sm" type="password" name="password" placeholder="password">
+
+      <div class="input-group-append">
+   <button type="submit" class="btn btn-outline-primary btn-sm">Login</button>
+   </div>
+   
+    </form>
+    
+    <a class="btn btn-outline-dark btn-sm" href="/auth/register">Register</a>
+   
+    </nav>
+    
+    <%} else {%>
+    <li class="text-black-50">
+      <%=username%>
+   </li>
+      </ul>
+        <form method="post" action="/breweries/user/search"
+          class="form-inline">
+          <input class="form-control mr-sm-2" type="text" name="query" placeholder="search breweries by city!">
+          <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" type="submit">Search</button>
+      </form>
+        <a class="btn btn-outline-dark btn-sm "href="/auth/logout">Log out</a>
+    </nav>
+    <%}%>
+
+</header>
 	<div class="container">
 		<h1>BREWRsearch™ Results: </h1>
   			

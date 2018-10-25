@@ -50,11 +50,18 @@ app.use('/user', userController);
 app.use('/auth', authController);
 
 
-app.get('/', (req, res) => {
-    res.render('index.ejs', {
-    	username: req.session.username,
-    	loggedIn: req.session.loggedIn
-    });
+app.get('/', async (req, res) => {
+        try {
+        const findBreweries = await Brewery.find({});
+            res.render('index.ejs', {
+                username: req.session.username,
+                loggedIn: req.session.loggedIn,
+                breweries: findBreweries
+            });    
+        } catch(e){
+            next(e)
+        }
+        
 });
 
 app.get('/seed', async (req, res) => {
