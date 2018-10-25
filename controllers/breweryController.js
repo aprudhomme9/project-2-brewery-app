@@ -77,15 +77,15 @@ router.post('/user/search', (req, res) => {
 
             Brewery.create(mappedBreweries, (err, createdBreweries) => {
 
-                if(err) {
-                    res.redirect('/breweries');
-                } else {
+                if(createdBreweries !== undefined) {
                     res.render('./brewery/results.ejs', {
-                    loggedIn: req.session.loggedIn,
-                    username: req.session.username,
-                    breweries: createdBreweries
+                        loggedIn: req.session.loggedIn,
+                        username: req.session.username,
+                        breweries: createdBreweries
 
                     })
+                } else {
+                    res.redirect('/breweries');
                 }
 
 	        })
