@@ -4,19 +4,36 @@
         <h1>BREWR</h1>
        <!--  Heres where my image would be IF I HAD ONE -->
        <div class="card-group">
-           <%breweries.slice(-5).forEach((brewery) => {%>
-               <%for(let i = 0; i < 6; i++)%> 
-               <div class="card">
+
+               <%let showBreweries = [];
+                for(let i = 0; i < 5; i++){
+
+                // get rand idx
+                let random = Math.floor(Math.random() * breweries.length)
+                
+                /// add to carousel
+                showBreweries.push(breweries[random]);
+                
+                // splice
+                breweries.splice(random, 1);
+            }
+
+            for(let i = 0; i < showBreweries.length; i++){%>
+            <div class="card">
                    <div class="card-body">
-                       <h4 class="card-title"><%=brewery.name%></h4>
+                       <h4 class="card-title"><%=showBreweries[i].name%></h4>
                        <!-- rating -->
-                       <span class="badge badge-success"><%=brewery.rating%>/5</span><br>
-                       <a href="/breweries/<%=brewery.id%>" class="btn btn-secondary">Details</a>
+                       <%if(showBreweries[i].rating < 2.5){%>
+                       <span class="badge badge-danger"><%=showBreweries[i].rating%>/5</span><br>
+                       <%} else if (showBreweries[i].rating < 4) {%> 
+                       <span class="badge badge-warning"><%=showBreweries[i].rating%>/5</span><br>
+                       <%} else {%>
+                           <span class="badge badge-success"><%=showBreweries[i].rating%>/5</span><br>
+                       <%}%>    
+                       <a href="/breweries/<%=showBreweries[i].id%>" class="btn btn-secondary">Details</a>
                    </div>
             </div>
-           <%})%>
-
-
+        <%}%>    
       </div>
       </div>
       </div>

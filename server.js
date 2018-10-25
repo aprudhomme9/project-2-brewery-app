@@ -16,7 +16,7 @@ const User = require('./models/user');
 
 
 
-
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
 app.use(session({
@@ -44,6 +44,7 @@ const breweryController = require('./controllers/breweryController');
 const beerController = require('./controllers/beerController');
 const userController = require('./controllers/userController');
 const authController = require('./controllers/authController');
+
 app.use('/breweries', breweryController);
 app.use('/beer', beerController);
 app.use('/user', userController);
