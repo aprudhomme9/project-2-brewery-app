@@ -6,12 +6,7 @@
       </div>
       <!-- temp info for beer -->
       <div class="row">
-         <div class="col-md-4">
-            <h2> Brewery: <%=beer.brewery.name%></h2>
-         </div>
-         <div class="col-md-8">
-            <h3> Location: <%=beer.brewery.location%></h3>
-         </div>
+         
      </div>
          <!--  review add your beer section, nothing yet -->
          <!-- info about beer -->
@@ -38,7 +33,7 @@
             <div class="col-md-6">
                <p></p>
             </div>
-            <form action="/user" method="post">
+            <form method="POST" action="/beer/<%=beer.id%>">
                <input type="hidden" name="_id" value="<%=beer.id%>">
                <button type="submit" value="Check In">Check In</button>
             </form>

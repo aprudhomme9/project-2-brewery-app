@@ -62,14 +62,18 @@ router.get('/:id', async(req, res, next) => {
 /***************
 BROKEN
 ***************/
-router.post('/', async (req, res) => {
-    console.log(req.session.username);
-    const foundUser = await User.find({username: req.session.username});
-    console.log(foundUser);
-    const createdBeer = await Beer.create(req.body);
-    await foundUser.beers.push(createdBeer);
+router.post('/:id', async (req, res) => {
+    try {
+        const foundUser = await User.findOne({username: req.session.username});
+        const foundBeer = await Beer.findById(req.params.id);
+        foundUser.beers.push(foundBeer);
 
-    res.redirect('/user');
+        await foundUser.save()
+
+        res.redirect('/user');
+    } catch (err) {
+        res.send(err)
+    }
 })
 // router.post('/', async (req, res, next) => {
 //     try {
