@@ -5,7 +5,7 @@
         <form action="/" method="post"></form>
             <label>Select Brewery</label>
             <br/>
-            <%if(fixed == true){%>
+            <%if(true){%>
                 <p>Brewery: <%=brewery.name%></p>
             <%} else {%>
                 <select name="breweryId">
@@ -15,7 +15,7 @@
                 </select>
             <%}%>
             <label>Beer Name</label>
-         <form method="POST" action="/user">
+         <form method="POST" action="/breweries/<%=brewery.id%>">
             <input type="text" name="name" placeholder="name of beer"><br/>
             <input type="text" name="style" placeholder="style">
             <input type="text" name="abv" placeholder="abv">

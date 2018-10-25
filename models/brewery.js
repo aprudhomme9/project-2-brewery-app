@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+
 const brewerySchema = new mongoose.Schema({
 	name: {
 		type: String,

@@ -47,22 +47,10 @@
             <a href="<%=brewery.website%>"><%=brewery.name%> Website</a>
         </div>
 
-        <div class="row"> 
-            <form action="/beer/new/<%=brewery.id%>" method="get">
-                <input type="hidden" name="beer">
-                <button type="submit" value="Add Beer">Add Beer</button>
-            </form>
+        <div class="row">     
+                <a class="btn btn-primary" value="Add Beer" href='/breweries/<%=brewery.id%>/newbeer'>Add Beer</a>
         </div>
 
-        <%beers.forEach((el, i) => {%>
-            <%if(i % 3 == 0 && i != 0){%>
-                 <div class="row">
-                        <%}%>
-                    <div class="col-md-3">
-                        <a href="/beer/<%=beers[i].id%>"><%=el.name%></a>
-                    </div>
-                </div>
-            <%});%>
     </div>
 </body>
 </html>

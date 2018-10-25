@@ -27,42 +27,12 @@ router.get('/', async (req, res) => {
 
 
 //GET - NEW - New beer AND brewery pick, for when a user makes a beer NOT from the brewery page. It allows them to pick the beer in a drop down vs. the req.params.id of the brewery coming in. 
-router.get('/new', async (req, res, next) => {
-    try {
-        const allBreweries = await Brewery.find({});
-        const foundUser = await User.findOne({username: req.session.username});
-        foundUser.save();
-        res.render('beer/new.ejs',{
-            username: req.session.username,
-            loggedIn: req.session.loggedIn,
-            breweries: allBreweries,
-            fixed: false
-        })
-    } catch(e){
-        next(e)
-    }       
-});
+
 
 //GET - NEW beer from brewery page, pulls in req.params.id 
 /*************
 BROKEN
 *************/
-router.get('/new/:breweryId', async (req, res, next) => {
-    try {
-        const findBrewery = await Brewery.findById(req.params.breweryId);
-        const foundUser = await User.findOne({username: req.session.username});
-        console.log(foundUser);
-        res.render('beer/new.ejs',{
-            username: req.session.username,
-            loggedIn: req.session.loggedIn,
-            brewery: findBrewery,
-            fixed: true
-        })
-    // link on brewery showpage that links to this
-    } catch(e){
-        next(e)
-    }   
-});
 
 
 // /new/:breweryId
@@ -93,8 +63,13 @@ router.get('/:id', async(req, res, next) => {
 BROKEN
 ***************/
 router.post('/', async (req, res) => {
-    const foundUser = await User.findOne({username: req.session.username});
+    console.log(req.session.username);
+    const foundUser = await User.find({username: req.session.username});
     console.log(foundUser);
+    const createdBeer = await Beer.create(req.body);
+    await foundUser.beers.push(createdBeer);
+
+    res.redirect('/user');
 })
 // router.post('/', async (req, res, next) => {
 //     try {

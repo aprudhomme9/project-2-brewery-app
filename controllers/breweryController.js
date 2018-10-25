@@ -124,16 +124,57 @@ router.get('/:id', async (req, res) => {
 })
 // So user can search for breweries
 router.delete('/:id', async (req, res) => {
-    console.log('hey');
-    const foundUser = await User.findOne({username: req.session.username});
-    console.log(foundUser.username);
-    console.log(foundUser.breweries);
+    try {
+        console.log('hey');
+        const foundUser = await User.findOne({username: req.session.username});
+        console.log(foundUser.username);
+        console.log(foundUser.breweries);
     
-    const breweryIndex = await foundUser.breweries.findIndex(brewery => brewery._id == req.params.id);
-    await foundUser.breweries.splice(breweryIndex, 0);
-    console.log(foundUser.breweries);
-    foundUser.save();
-    res.redirect('/user');
+        const breweryIndex = await foundUser.breweries.findIndex(brewery => brewery._id == req.params.id);
+        await foundUser.breweries.splice(breweryIndex, 0);
+        console.log(foundUser.breweries);
+        foundUser.save();
+        res.redirect('/user');
+    } catch (err) {
+        res.send(err)
+    }
+    
+})
+
+router.get('/:id/newbeer', async (req, res) => {
+    try {
+        const foundBrewery = await Brewery.findById(req.params.id);
+        const allBreweries = await Brewery.find({});
+        const foundUser = await User.findOne({username: req.session.username});
+
+        res.render('./beer/new.ejs', {
+            brewery: foundBrewery,
+            breweries: allBreweries,
+            loggedIn: req.session.loggedIn,
+            username: req.session.username
+        })  
+    } catch (err) {
+        res.send(err)
+    }
+    
+})
+
+router.post('/:id', async (req, res) => {
+    try {
+        console.log(req.session.username);
+
+        const foundUser = await User.findOne({username: req.session.username});
+        const createdBeer = await Beer.create(req.body);
+        createdBeer.save();
+        await foundUser.beers.push(createdBeer);
+        console.log(foundUser.beers);
+        await foundUser.save();
+
+        res.redirect('/user');
+    } catch (err) {
+        res.send(err)
+    }
+    
 })
 
 

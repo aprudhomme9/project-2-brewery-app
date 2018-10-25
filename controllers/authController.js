@@ -16,8 +16,6 @@ router.get('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const foundUser = await User.findOne({username: req.body.username});
-    foundUser.save();
-    console.log(foundUser);
 
     if(foundUser) {
       if(bcrypt.compareSync(req.body.password, foundUser.password)) {
@@ -64,6 +62,8 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const foundUser = await User.findOne({username: req.body.username});
+    req.session.loggedIn = true;
+    req.session.username = req.body.username;
 
     if(foundUser) {
       if(bcrypt.compareSync(req.body.password, foundUser.password)) {
