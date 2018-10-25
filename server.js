@@ -4,6 +4,7 @@ const bodyParser     = require('body-parser');
 const methodOverride = require('method-override');
 const session        = require('express-session');
 const request 		 = require('superagent');
+const PORT = process.env.PORT || 3000;
 
 require('./db/db');
 
@@ -84,7 +85,7 @@ app.get('/seed', async (req, res) => {
 
 
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
 	const today = new Date();
 	console.log((today.toLocaleDateString('en-US') + ': ' + today.toLocaleTimeString('en-US')));
 })
