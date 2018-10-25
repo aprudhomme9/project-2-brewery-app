@@ -24,7 +24,12 @@ router.get('/', (req, res) => {
         const userLat = locationData.location.lat;
         const userLng = locationData.location.lng;
         console.log(userLat, userLng);
-        request.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLat + ',' + userLng  + '&radius=43700&keyword=breweries&key=' + placesKey).end((err, response) => {
+        request.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLat + ',' + userLng  + '&radius=43700&keyword=breweries&key=' + placesKey).end(async (err, response) => {
+                try {
+                
+                } catch (err) {
+                res.send(err)
+                }
     
                 const placesData = JSON.parse(response.text);
 
@@ -39,6 +44,21 @@ router.get('/', (req, res) => {
                     }
                     return newObj;
                 })
+
+                // Mongoose query: get all breweries from db
+                // const foundBreweries = await Brewery.find({});
+
+                // const breweriesToCreate = foundBreweries.forEach((found) => {
+                //      mappedBreweries.filter(brewery => brewery.name !== found.name)
+                //     })
+                // console.log(breweriesToCreate);
+                
+                // breweriesToCreate.forEach((brewery) => {
+                //     mappedBreweries.push(brewery)
+                // })
+                
+                // filter out any that are arleady in the array you just got from db
+
 
                 Brewery.create(mappedBreweries, (err, createdBreweries) => {
 
