@@ -4,7 +4,7 @@
 <div class="container">
 	<h1><%=brewery.name%></h1>
 		<div class = 'list-item-info'>
-			<h5>Consensus Rating: <%=brewery.rating%>/5 stars</h5>
+			<span class="badge badge-success"><%=brewery.rating%>/5</span>
 
 			<h5>Price Level: <% if (brewery.price = 1) { -%>
  						<p>$</p>

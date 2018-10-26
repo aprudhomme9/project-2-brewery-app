@@ -77,7 +77,7 @@ GET ROUTE TO BREWERY INDEX PAGE VIA SEARCH
 RESULTS DISPLAYED ARE BASED ON CITY SEARCH PERFORMED BY USER
 **************/
 router.post('/user/search', (req, res) => {
-	let userQuery = req.body.query;
+	const userQuery = req.body.query;
     console.log(req.body.query);
     
 	request.get('https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + userQuery + '+breweries' + '&key=' + placesKey).end((err, response) => {
@@ -101,7 +101,8 @@ router.post('/user/search', (req, res) => {
                     res.render('./brewery/results.ejs', {
                         loggedIn: req.session.loggedIn,
                         username: req.session.username,
-                        breweries: createdBreweries
+                        breweries: createdBreweries,
+                        query: userQuery
 
                     })
                 } else {
