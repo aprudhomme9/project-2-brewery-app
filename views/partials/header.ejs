@@ -1,29 +1,4 @@
-  ```<% include ../partials/header.ejs %>
-    <div class="container">
-        <header>
-            <h1>All of the beer</h1>
-                <br>  
-                <%beer.forEach((el, i) => {%>
-                    <%if(i % 3 == 0){%>
-                        <div class="card-group"> 
-                        <%}%>
-                        <div class="card">
-                        <div class="card-body">
-                        <a class="card-title" href="/beer/<%=beer[i].id%>"><%=el.name%></a>
-                    </div>
-                     </div> 
-            <%});%>
-           
-        </div>
-
-        </header>
-    </div>
-</body>```
-
-Beer page, turns the columns into cards.
-
-You could change the title if you want.
-```<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   
@@ -89,5 +64,5 @@ You could change the title if you want.
     </nav>
     <%}%>
 
-</header>```
+</header>
 
