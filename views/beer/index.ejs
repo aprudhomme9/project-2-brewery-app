@@ -1,21 +1,23 @@
-  <% include ../partials/header.ejs %>
-    <div class="container">
-        <header>
-            <h1>All of the beer</h1>
-                <br>  
-                <%beer.forEach((el, i) => {%>
-                    <%if(i % 3 == 0){%>
-                        <div class="card-group"> 
-                        <%}%>
-                        <div class="card">
-                        <div class="card-body">
-                        <a class="card-title" href="/beer/<%=beer[i].id%>"><%=el.name%></a>
-                    </div>
-                     </div> 
-            <%});%>
-           
-        </div>
+<% include ../partials/header.ejs %>
 
-        </header>
-    </div>
+       <header>
+           <h1>All of the beer</h1>
+               <br>
+               <%beer.forEach((el, i) => {%>
+                   <%if(i % 3 == 0 && 0 != 0){%>
+                       <div class="card-group">
+                       <%}%>
+                       <div class="card">
+                       <div class="card-body">
+                       <a class="card-title" href="/beer/<%=beer[i].id%>"><%=el.name%></a>
+                       <p class="beerindex card-text"><%=el.brewery.name%></p>
+                   </div>
+                    </div><br>
+           <%});%>
+
+       </div>
+   </div>
+
+       </header>
+
 </body>
