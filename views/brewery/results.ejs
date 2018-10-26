@@ -1,29 +1,4 @@
-  ```<% include ../partials/header.ejs %>
-    <div class="container">
-        <header>
-            <h1>All of the beer</h1>
-                <br>  
-                <%beer.forEach((el, i) => {%>
-                    <%if(i % 3 == 0){%>
-                        <div class="card-group"> 
-                        <%}%>
-                        <div class="card">
-                        <div class="card-body">
-                        <a class="card-title" href="/beer/<%=beer[i].id%>"><%=el.name%></a>
-                    </div>
-                     </div> 
-            <%});%>
-           
-        </div>
-
-        </header>
-    </div>
-</body>```
-
-Beer page, turns the columns into cards.
-
-You could change the title if you want.
-```<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   
@@ -89,4 +64,35 @@ You could change the title if you want.
     </nav>
     <%}%>
 
-</header>```
+</header>
+  <div class="container">
+        <h1>Brewr Search Results for <%=query%></h1>
+              
+          <%breweries.forEach((brewery) => {%>
+              
+          <div class='container'>
+              <div class="card" class='col-md-6'>
+                  <div class="card-body">
+                      <h4 class="card-title"><%=brewery.name%></h4>
+            <span class="badge badge-success"><%=brewery.rating%>/5</span>
+            <p class="card-text text-primary"><h5>Price Level: <% if (brewery.price = 1) { -%>
+            <p>$</p>
+          <% } else if(brewery.price = 2) { -%>
+            <p>$$</p>
+          <% } else if (brewery.price = 3) {-%>
+            <p>$$$</p>
+          <%} else if (brewery.price = 4) { -%>
+            <p>$$$$</p>
+          <%} else {%>
+          Price Range Unknown
+          <%}%></h5></p>
+                     <a href="/breweries/<%=brewery.id%>" class="btn btn-primary">Details</a>
+                  </div>
+              </div>
+          </div>
+              
+          <%})%>
+          
+    </div>
+</body>
+</html>
