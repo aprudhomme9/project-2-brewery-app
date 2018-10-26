@@ -1,10 +1,36 @@
-<!DOCTYPE html>
+  ```<% include ../partials/header.ejs %>
+    <div class="container">
+        <header>
+            <h1>All of the beer</h1>
+                <br>  
+                <%beer.forEach((el, i) => {%>
+                    <%if(i % 3 == 0){%>
+                        <div class="card-group"> 
+                        <%}%>
+                        <div class="card">
+                        <div class="card-body">
+                        <a class="card-title" href="/beer/<%=beer[i].id%>"><%=el.name%></a>
+                    </div>
+                     </div> 
+            <%});%>
+           
+        </div>
+
+        </header>
+    </div>
+</body>```
+
+Beer page, turns the columns into cards.
+
+You could change the title if you want.
+```<!DOCTYPE html>
 <html>
 <head>
   
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="/css/style.css">
   <link href="https://fonts.googleapis.com/css?family=Pacifico%7CRoboto" rel="stylesheet">
+
   <title></title>
 </head>
 <body>
@@ -51,48 +77,16 @@
     </nav>
     
     <%} else {%>
-    <li class="text-black-50">
-      <%=username%>
-   </li>
-      </ul>
-        <form method="post" action="/breweries/user/search"
+    </ul>
+    <p class="text-black-50">
+      <%=username%></p>
+        <form method="post" action="../breweries/user/search"
           class="form-inline">
-          <input class="form-control mr-sm-2" type="text" name="query" placeholder="Enter city or state">
+          <input class="form-control mr-sm-2" type="text" name="query" placeholder="Enter City or State">
           <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" type="submit">Search</button>
       </form>
         <a class="btn btn-outline-dark btn-sm "href="/auth/logout">Log out</a>
     </nav>
     <%}%>
 
-</header>
-  <div class="container">
-        <h1>Brewr Search Results for <%=query%></h1>
-              
-          <%breweries.forEach((brewery) => {%>
-              
-          <div class='container'>
-              <div class="card" class='col-md-6'>
-                  <div class="card-body">
-                      <h4 class="card-title"><%=brewery.name%></h4>
-            <span class="badge badge-success"><%=brewery.rating%>/5</span>
-            <p class="card-text text-primary"><h5>Price Level: <% if (brewery.price = 1) { -%>
-            <p>$</p>
-          <% } else if(brewery.price = 2) { -%>
-            <p>$$</p>
-          <% } else if (brewery.price = 3) {-%>
-            <p>$$$</p>
-          <%} else if (brewery.price = 4) { -%>
-            <p>$$$$</p>
-          <%} else {%>
-          Price Range Unknown
-          <%}%></h5></p>
-                     <a href="/breweries/<%=brewery.id%>" class="btn btn-primary">Details</a>
-                  </div>
-              </div>
-          </div>
-              
-          <%})%>
-          
-    </div>
-</body>
-</html>
+</header>```

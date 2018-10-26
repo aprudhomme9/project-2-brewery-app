@@ -2,18 +2,19 @@
     <div class="container">
         <header>
             <h1>All of the beer</h1>
-                <br>
-                <div class="row"> 
+                <br>  
                 <%beer.forEach((el, i) => {%>
-                    <%if(i % 3 == 0 && i != 0){%>
-                        </div>
-                        <div class="row">
+                    <%if(i % 3 == 0){%>
+                        <div class="card-group"> 
                         <%}%>
-                    <div class="col-md-3">
-                        <a href="/beer/<%=beer[i].id%>"><%=el.name%></a>
+                        <div class="card">
+                        <div class="card-body">
+                        <a class="card-title" href="/beer/<%=beer[i].id%>"><%=el.name%></a>
                     </div>
+                     </div> 
             <%});%>
-            </div> 
+           
+        </div>
 
         </header>
     </div>
