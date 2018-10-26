@@ -1,22 +1,32 @@
   <% include ../partials/header.ejs %>
-	<div class="container">
-		<h1>Breweries Near You</h1>
-  			
-  		<%breweries.forEach((brewery) => {%>
-  			
-  		<div class='container'>
-  			<div class="card" class='col-md-6'>
-  				<div class="card-body">
-  					<h4 class="card-title"><%=brewery.name%></h4>
-  					<p class="card-text text-primary"><%=brewery.rating%>/5</p>
- 					<a href="/breweries/<%=brewery.id%>" class="btn btn-primary">Details</a>
-  				</div>
-  			</div>
-  		</div>
-  			
-  		<%})%>
-  		
-	</div>
+    <div class="container">
+        <h1>Breweries Near You</h1>
+              
+          <%breweries.forEach((brewery) => {%>
+              
+          <div class='container'>
+              <div class="card" class='col-md-6'>
+                  <div class="card-body">
+                      <h4 class="card-title"><%=brewery.name%></h4>
+            <span class="badge badge-success"><%=brewery.rating%>/5</span>
+            <p class="card-text text-primary"><h5>Price Level: <% if (brewery.price = 1) { -%>
+            <p>$</p>
+          <% } else if(brewery.price = 2) { -%>
+            <p>$$</p>
+          <% } else if (brewery.price = 3) {-%>
+            <p>$$$</p>
+          <%} else if (brewery.price = 4) { -%>
+            <p>$$$$</p>
+          <%} else {%>
+          Price Range Unknown
+          <%}%></h5></p>
+                     <a href="/breweries/<%=brewery.id%>" class="btn btn-primary">Details</a>
+                  </div>
+              </div>
+          </div>
+              
+          <%})%>
+          
+    </div>
 </body>
 </html>
-	
